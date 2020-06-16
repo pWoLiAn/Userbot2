@@ -849,7 +849,7 @@ async def hack(hacked):
         if await hacked.get_reply_message():
             await hacked.edit(
                 "`Targeted User was Hacked successfully 👨‍💻......`"
-                "`Pay 999$ To` @devpatel_73 `To Remove This Hack`\n"
+                "`Pay 999$ To` @kensurboiii `To Remove This Hack`\n"
             )
 
 			  
@@ -1179,7 +1179,7 @@ CMD_HELP.update({
 \nUsage: Let me Google that for you real quick !!\
 \n\n.decide\
 \nUsage: Make a quick decision.\
-\n\n.gey/noob/rape\
+\n\n.gey/noob/rape/hack\
 \nUsage: You already got that! Ain't?.\
 \n\n.pro\
 \nUsage: If you think you're pro, try this.\
