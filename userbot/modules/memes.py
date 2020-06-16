@@ -1121,6 +1121,8 @@ CMD_HELP.update({
 \nUsage: cow which says things.\
 \n\n.milksay\
 \nUsage: Weird Milk that can speak\
+\n\n.kisssay\
+\nUsage: chaos\
 \n\n:/\
 \nUsage: Check yourself ;)\
 \n\n-_-\
