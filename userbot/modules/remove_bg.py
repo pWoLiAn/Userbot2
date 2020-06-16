@@ -57,7 +57,7 @@ async def kbg(remob):
             await remob.client.send_file(
                 remob.chat_id,
                 remove_bg_image,
-                caption="Background removed by [Dev](https://t.me/devpatel_73) using his nub skills",
+                caption="Background removed by @kensurboiii using his nub skills",
                 force_document=True,
                 reply_to=message_id)
             await remob.delete()
