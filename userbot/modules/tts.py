@@ -47,7 +47,7 @@ TRT_LANG = "en"
 TEMP_DOWNLOAD_DIRECTORY = "/root/userbot/.bin"
 
 
-@register(outgoing=True, pattern=r"^.newtts(?: |$)([\s\S]*)")
+@register(outgoing=True, pattern=r"^.tts1(?: |$)([\s\S]*)")
 async def text_to_speech(query):
     """ For .tts command, a wrapper for Google Text-to-Speech. """
     textx = await query.get_reply_message()
