@@ -115,6 +115,12 @@ YOUTUBE_API_KEY = os.environ.get("YOUTUBE_API_KEY", None)
 # Default .alive name
 ALIVE_NAME = os.environ.get("ALIVE_NAME", None)
 
+# Genius lyrics  API
+GENIUS = os.environ.get("GENIUS_ACCESS_TOKEN", None)
+
+TERM_ALIAS = os.environ.get("TERM_ALIAS", "Userbot1")
+
+
 # Time & Date - Country and Time Zone
 COUNTRY = str(os.environ.get("COUNTRY", ""))
 TZ_NUMBER = int(os.environ.get("TZ_NUMBER", 1))
