@@ -520,7 +520,7 @@ async def _(event):
 
     input_str = event.pattern_match.group(1)
 
-    if input_str == "hack":
+    if input_str == "tghack":
 
         await event.edit(input_str)
 
@@ -536,7 +536,7 @@ async def _(event):
             "`Hacking... 52%\n█████████████▒▒▒▒▒▒▒▒▒▒▒▒ `",
             "`Hacking... 84%\n█████████████████████▒▒▒▒ `",
             "`Hacking... 100%\n█████████HACKED███████████ `",
-            "`Targeted Account Hacked...\n\nPay 9999$ To @heyworld or gib a pizza party 🍕 To Remove This Hack`"
+            "`Targeted Account Hacked...\n\nPay 9999$ To @kensurboiii or gib a pizza party 🍕 To Remove This Hack`"
         ]
 
         for i in animation_ttl:
@@ -2906,7 +2906,7 @@ CMD_HELP.update({
 \nUsage: For calling aliens 👽👽 :P\
 \n\n.gangstar\
 \nUsage:U becum gengstar 🤠🤠.\
-\n\n.hack\
+\n\n.tghack\
 \nUsage: For hacking telegram🖥️🖥️.\
 \n\n.dump\
 \nUsage: For throwing waste xD\
