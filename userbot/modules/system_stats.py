@@ -131,8 +131,8 @@ async def pipcheck(pip):
 @register(outgoing=True, pattern="^.alive$")
 async def amireallyalive(alive):
     """ For .alive command, check if the bot is running.  """
-    await alive.edit("`Meh alive now go away from me `\n\n"
-            f"`Owned by noob` {DEFAULTUSER} `sur `")
+    await alive.edit("`Meh.I'm alive.Now DND & lemme watch some hentai in peace...`\n\n"
+            f"`Owned by the noob ni🅱️🅱️a ` {DEFAULTUSER} ` uwu `")
 
 
 @register(outgoing=True, pattern="^.aliveu")
