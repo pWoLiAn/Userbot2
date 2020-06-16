@@ -729,7 +729,7 @@ CMD_HELP.update(
 CMD_HELP.update({
     'tts':
     '.tts <text> [or reply]\
-        \nUsage: Translates text to speech for the language which is set.\nUse .lang tts <language code> to set language for tts. (Default is English.)'
+        \nUsage: Translates text to speech for the language which is set.\nUse .lang tts <language code> to set language for tts. (Default is English.).p.s. new one is tts1'
 })
 CMD_HELP.update({
     'trt':
