@@ -66,7 +66,7 @@ LOGSPAMMER = sb(os.environ.get("LOGSPAMMER", "False"))
 PM_AUTO_BAN = sb(os.environ.get("PM_AUTO_BAN", "False"))
 
 # Quotes API Token
-QUOTES_API_TOKEN = os.environ.get("API_TOKEN", None) 
+QUOTES_API_TOKEN = os.environ.get("QUOTES_API_TOKEN", None) 
 
 # Heroku Credentials for updater.
 HEROKU_MEMEZ = sb(os.environ.get("HEROKU_MEMEZ", "False"))
