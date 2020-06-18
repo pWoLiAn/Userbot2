@@ -11,6 +11,7 @@ import asyncio
 import random
 import re
 import time
+import os
 
 from collections import deque
 
@@ -21,7 +22,7 @@ from telethon.tl.types import MessageEntityMentionName
 
 from cowpy import cow
 
-from userbot import CMD_HELP
+from userbot import CMD_HELP, LOGS
 from userbot.events import register
 
 # ================= CONSTANT =================
@@ -946,6 +947,28 @@ async def metoo(hahayes):
     """ Haha yes """
     if not hahayes.text[0].isalpha() and hahayes.text[0] not in ("/", "#", "@", "!"):
         await hahayes.edit(random.choice(NOOBSTR))
+
+@register(outgoing=True, pattern="^.iff$")
+async def pressf(f):
+    """Pays respects"""
+    args = f.text.split()
+    arg = (f.text.split(' ', 1))[1] if len(args) > 1 else None
+    if len(args) == 1:
+        r = random.randint(0, 3)
+        LOGS.info(r)
+        if r == 0:
+            await f.edit("┏━━━┓\n┃┏━━┛\n┃┗━━┓\n┃┏━━┛\n┃┃\n┗┛")
+        elif r == 1:
+            await f.edit("╭━━━╮\n┃╭━━╯\n┃╰━━╮\n┃╭━━╯\n┃┃\n╰╯")
+        else:
+            arg = "F"
+    if arg is not None:
+        out = ""
+        F_LENGTHS = [5, 1, 1, 4, 1, 1, 1]
+        for line in F_LENGTHS:
+            c = max(round(line / len(arg)), 1)
+            out += (arg * c) + "\n"
+        await f.edit("`" + out + "`")
 			  
 @register(outgoing=True, pattern="^.metoo$")
 async def metoo(hahayes):
@@ -1170,7 +1193,7 @@ CMD_HELP.update({
 \n\n.clap\
 \nUsage: Praise people!\
 \n\n.f <emoji/character>\
-\nUsage: Pay Respects.\
+\nUsage: Pay Respects.also .iff\
 \n\n.bt\
 \nUsage: Believe me, you will find this useful.\
 \n\n.smk <text/reply>\
