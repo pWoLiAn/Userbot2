@@ -108,7 +108,7 @@ async def setlang(prog):
     CARBONLANG = prog.pattern_match.group(1)
     await prog.edit(f"Language for carbon.now.sh set to {CARBONLANG}")
 
-@register(outgoing=True, pattern="^.karbon")
+@register(outgoing=True, pattern="^.carbon")
 async def carbon_api(e):
     """ A Wrapper for carbon.now.sh """
     await e.edit("`Processing..`")
@@ -266,6 +266,38 @@ async def gsearch(q_event):
             "Google Search query `" + match + "` was executed successfully",
         )
 
+@register(outgoing=True, pattern=r"^.google1 (.*)")
+async def gsearch(q_event):
+    """ For .google command, do a Google search. """
+    match = q_event.pattern_match.group(1)
+    page = findall(r"page=\d+", match)
+    try:
+        page = page[0]
+        page = page.replace("page=", "")
+        match = match.replace("page=" + page[0], "")
+    except IndexError:
+        page = 1
+    search_args = (str(match), int(page))
+    gsearch = GoogleSearch()
+    gresults = await gsearch.async_search(*search_args)
+    msg = ""
+    for i in range(1):
+        try:
+            title = gresults["titles"][i]
+            link = gresults["links"][i]
+            desc = gresults["descriptions"][i]
+            msg += f"[{title}]({link})\n`{desc}`\n\n"
+        except IndexError:
+            break
+    await q_event.edit("**Search Query:**\n`" + match + "`\n\n" +
+                       msg,
+                       link_preview=False)
+
+    if BOTLOG:
+        await q_event.client.send_message(
+            BOTLOG_CHATID,
+            "Google Search query `" + match + "` was executed successfully",
+        )
 
 @register(outgoing=True, pattern=r"^.wiki (.*)")
 async def wiki(wiki_q):
@@ -378,7 +410,7 @@ async def text_to_speech(query):
     except Exception as e:
         await query.edit(str(e))
 
-@register(outgoing=True, pattern="^.tr(?: |$)(.*)")
+@register(outgoing=True, pattern="^.trt(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -1318,7 +1350,7 @@ async def capture(url):
         await url.delete()        
 
 CMD_HELP.update({
-    "scrappers":
+    "scrapers":
     "`.img` <search_query>\
 \nUsage: Does an image search on Google and shows 5 images.\
 \n\n`.currency` <amount> <from> <to>\
@@ -1326,13 +1358,13 @@ CMD_HELP.update({
 \n\n`.carbon` <text or reply>\
 \nUsage: Beautify your code using carbon.now.sh\nUse .crblang <text> to set language for your code.\
 \n\n`.google` <query>\
-\nUsage: Does a search on Google.\
+\nUsage: Does a search on Google.also google1.\
 \n\n`.wiki` <query>\
 \nUsage: Does a search on Wikipedia.\
 \n\n`.ud` <query>\
 \nUsage: Usage: Does a search on Urban Dictionary.\
 \n\n`.tts` <text> [or reply]\
-\nUsage:Translates text to speech for the language which is set.\nUse .lang tts <language code> to set language for tts. (Default is English.)\
+\nUsage:Translates text to speech for the language which is set.\nUse .lang tts <language code> to set language for tts. (Default is English.).New one is tts1.\
 \n\n`.trt` <text> [or reply]\
 \nUsage: Translates text to the language which is set.\nUse .lang trt <language code> to set language for trt. (Default is English)\
 \n\n`.yt` <text>\
