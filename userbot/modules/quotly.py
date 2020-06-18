@@ -1,107 +1,102 @@
-#    Friendly Telegram (telegram userbot)
-#    Copyright (C) 2018-2019 The Authors
+# Copyright (C) 2019 The Raphielscape Company LLC.
+#
+# Licensed under the Raphielscape Public License, Version 1.d (the "License");
+# you may not use this file except in compliance with the License.
+#
+# Port From UniBorg to UserBot by MoveAngel
 
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
-
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <https://www.gnu.org/licenses/>.
-#    Credits to ftg plugins, cmd is .q
-
+import datetime
 import logging
 import requests
 import base64
 import json
-import os 
-import telethon
-from telethon import events
-from io import BytesIO
-from PIL import Image
-import asyncio
-import datetime
-from collections import defaultdict
-import math
 import os
-import requests
-import zipfile
-from telethon.errors.rpcerrorlist import StickersetInvalidError
-from telethon.errors import MessageNotModifiedError
+import telethon
+
+from PIL import Image
+from io import BytesIO
+from telethon import events
+from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon.tl.functions.account import UpdateNotifySettingsRequest
-from telethon.tl.functions.channels import GetParticipantRequest
-from telethon.tl.functions.messages import GetStickerSetRequest
-from telethon.tl.types import (
-    DocumentAttributeFilename,
-    DocumentAttributeSticker,
-    InputMediaUploadedDocument,
-    InputPeerNotifySettings,
-    InputStickerSetID,
-    InputStickerSetShortName,
-    MessageMediaPhoto
-)
-from userbot import BOTLOG, BOTLOG_CHATID, CMD_HELP, bot
+from userbot import bot, CMD_HELP, QUOTES_API_TOKEN
 from userbot.events import register
-
-
-
-
-logger = logging.getLogger(__name__)
-
 
 if 1 == 1:
     strings = {
         "name": "Quotes",
-        # this API_TOKEN could be found here http://antiddos.systems
         "api_token_cfg_doc": "API Key/Token for Quotes.",
         "api_url_cfg_doc": "API URL for Quotes.",
         "colors_cfg_doc": "Username colors",
         "default_username_color_cfg_doc": "Default color for the username.",
-        "no_reply": "<b>You didn't reply to a message.</b>",
-        "no_template": "<b>You didn't specify the template.</b>",
+        "no_reply": "You didn't reply to a message.",
+        "no_template": "You didn't specify the template.",
         "delimiter": "</code>, <code>",
-        "server_error": "<b>Server error. Please report to developer.</b>",
-        "invalid_token": "<b>You've set an invalid token, get it from `http://antiddos.systems`.</b>",
-        "unauthorized": "<b>You're unauthorized to do this.</b>",
-        "not_enough_permissions": "<b>Wrong template. You can use only the default one.</b>",
-        "templates": "<b>Available Templates:</b> <code>{}</code>",
-        "cannot_send_stickers": "<b>You cannot send stickers in this chat.</b>",
+        "server_error": "Server error. Please report to developer.",
+        "invalid_token": "You've set an invalid token, get it from `http://antiddos.systems`.",
+        "unauthorized": "You're unauthorized to do this.",
+        "not_enough_permissions": "Wrong template. You can use only the default one.",
+        "templates": "Available Templates: <code>{}</code>",
+        "cannot_send_stickers": "You cannot send stickers in this chat.",
         "admin": "admin",
         "creator": "creator",
         "hidden": "hidden",
         "channel": "Channel"
     }
 
-    config = dict({"api_token": os.environ.get("API_TOKEN"), 
-                                          "api_url": "http://api.antiddos.systems",
+    config = dict({"api_url": "http://api.antiddos.systems",
                                           "username_colors": ["#fb6169", "#faa357", "#b48bf2", "#85de85",
                                                               "#62d4e3", "#65bdf3", "#ff5694"],
                                           "default_username_color": "#b48bf2"})
-   
-    client = bot
 
-    
-    @register(outgoing=True, pattern="^.q$")
-    async def quotecmd(message):  # noqa: C901
+@register(outgoing=True, pattern="^.q(?: |$)(.*)")
+async def _(event):
+    if event.fwd_from:
+        return 
+    if not event.reply_to_msg_id:
+       await event.edit("```Reply to any user message.```")
+       return
+    reply_message = await event.get_reply_message() 
+    if not reply_message.text:
+       await event.edit("```Reply to text message```")
+       return
+    chat = "@QuotLyBot"
+    sender = reply_message.sender
+    if reply_message.sender.bot:
+       await event.edit("```Reply to actual users message.```")
+       return
+    await event.edit("```Making a Quote```")
+    async with bot.conversation(chat) as conv:
+          try:     
+              response = conv.wait_event(events.NewMessage(incoming=True,from_users=1031952739))
+              await bot.forward_messages(chat, reply_message)
+              response = await response 
+          except YouBlockedUserError: 
+              await event.reply("```Please unblock @QuotLyBot and try again```")
+              return
+          if response.text.startswith("Hi!"):
+             await event.edit("```Can you kindly disable your forward privacy settings for good?```")
+          else: 
+             await event.delete()   
+             await bot.forward_messages(event.chat_id, response.message)
+@register(outgoing=True, pattern="^.pch(?: |$)(.*)")
+async def quotecmd(message):  # noqa: C901
         """Quote a message.
-        Usage: .quote [template]
+        Usage: .pch [template]
         If template is missing, possible templates are fetched."""
-        await message.delete()
+        if QUOTES_API_TOKEN is None:
+            await message.edit("Provide QUOTES_API_TOKEN from http://antiddos.systems/login in config.py or heroku vars first!!")
+            return
+        await message.edit("`Processing...`")
         args = message.raw_text.split(" ")[1:]
         if args == []:
             args = ["default"]
         reply = await message.get_reply_message()
 
         if not reply:
-            return await message.respond(strings["no_reply"])
+            return await message.edit(strings["no_reply"])
 
         if not args:
-            return await message.respond(strings["no_template"])
+            return await message.edit(strings["no_template"])
 
         username_color = username = admintitle = user_id = None
         profile_photo_url = reply.from_id
@@ -109,7 +104,7 @@ if 1 == 1:
         admintitle = ""
         if isinstance(message.to_id, telethon.tl.types.PeerChannel):
             try:
-                user = await client(telethon.tl.functions.channels.GetParticipantRequest(message.chat_id,
+                user = await bot(telethon.tl.functions.channels.GetParticipantRequest(message.chat_id,
                                                                                               reply.from_id))
                 if isinstance(user.participant, telethon.tl.types.ChannelParticipantCreator):
                     admintitle = user.participant.rank or strings["creator"]
@@ -119,7 +114,7 @@ if 1 == 1:
             except telethon.errors.rpcerrorlist.UserNotParticipantError:
                 user = await reply.get_sender()
         elif isinstance(message.to_id, telethon.tl.types.PeerChat):
-            chat = await client(telethon.tl.functions.messages.GetFullChatRequest(reply.to_id))
+            chat = await bot(telethon.tl.functions.messages.GetFullChatRequest(reply.to_id))
             participants = chat.full_chat.participants.participants
             participant = next(filter(lambda x: x.user_id == reply.from_id, participants), None)
             if isinstance(participant, telethon.tl.types.ChatParticipantCreator):
@@ -145,7 +140,7 @@ if 1 == 1:
             elif reply.forward.chat:
                 username = telethon.utils.get_display_name(reply.forward.chat)
 
-        pfp = await client.download_profile_photo(profile_photo_url, bytes)
+        pfp = await bot.download_profile_photo(profile_photo_url, bytes)
         if pfp is not None:
             profile_photo_url = "data:image/png;base64, " + base64.b64encode(pfp).decode()
 
@@ -162,7 +157,7 @@ if 1 == 1:
             "Text": reply.message,
             "Markdown": get_markdown(reply),
             "Template": args[0],
-            "APIKey": config["api_token"]
+            "APIKey": QUOTES_API_TOKEN
         })
 
         resp = requests.post(config["api_url"] + "/api/v2/quote", data=request)
@@ -170,31 +165,31 @@ if 1 == 1:
         resp = resp.json()
 
         if resp["status"] == 500:
-            return await message.respond(strings["server_error"])
+            return await message.edit(strings["server_error"])
         elif resp["status"] == 401:
             if resp["message"] == "ERROR_TOKEN_INVALID":
-                return await message.respond(strings["invalid_token"])
+                return await message.edit(strings["invalid_token"])
             else:
                 raise ValueError("Invalid response from server", resp)
         elif resp["status"] == 403:
             if resp["message"] == "ERROR_UNAUTHORIZED":
-                return await message.respond(strings["unauthorized"])
+                return await message.edit(strings["unauthorized"])
             else:
                 raise ValueError("Invalid response from server", resp)
         elif resp["status"] == 404:
             if resp["message"] == "ERROR_TEMPLATE_NOT_FOUND":
                 newreq = requests.post(config["api_url"] + "/api/v1/getalltemplates", data={
-                    "token": config["api_token"]
+                    "token": QUOTES_API_TOKEN
                 })
                 newreq = newreq.json()
 
                 if newreq["status"] == "NOT_ENOUGH_PERMISSIONS":
-                    return await message.respond(strings["not_enough_permissions"])
+                    return await message.edit(strings["not_enough_permissions"])
                 elif newreq["status"] == "SUCCESS":
                     templates = strings["delimiter"].join(newreq["message"])
-                    return await message.respond(strings["templates"].format(templates))
+                    return await message.edit(strings["templates"].format(templates))
                 elif newreq["status"] == "INVALID_TOKEN":
-                    return await message.respond(strings["invalid_token"])
+                    return await message.edit(strings["invalid_token"])
                 else:
                     raise ValueError("Invalid response from server", newreq)
             else:
@@ -213,9 +208,10 @@ if 1 == 1:
             sticker.name = "sticker.webp"
             sticker.seek(0)
             try:
+                await message.delete()
                 await reply.reply(file=sticker)
             except telethon.errors.rpcerrorlist.ChatSendStickersForbiddenError:
-                await message.respond(strings["cannot_send_stickers"])
+                await message.edit(strings["cannot_send_stickers"])
             file.close()
 
 
@@ -249,12 +245,12 @@ def get_markdown(reply):
             logger.warning("Unknown entity: " + str(entity))
 
         markdown.append(md_item)
-    return markdown
+    return markdown             
 
 CMD_HELP.update({
-        "quotly": 
-        ".q reply_message. \
-          \nUsage: Enhance ur text to sticker. \
-          \nNote: please add API_TOKEN and API_URL in Heroku vars. \
-          \n you can get those from http://antiddos.systems/. "
-    })
+    "quotly":
+    "`.q`\
+\nUsage: Enhance ur text to sticker.\
+\n\n`.pch`\
+\nUsage: Same as quotly, enhance ur text to sticker."
+})    
