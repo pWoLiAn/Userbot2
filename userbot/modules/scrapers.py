@@ -659,7 +659,7 @@ CMD_HELP.update({
 })
 CMD_HELP.update(
     {'google': '.google <query>\
-        \nUsage: Does a search on Google.also google1.'})
+        \nUsage: Does a search on Google.'})
 CMD_HELP.update(
     {'wiki': '.wiki <query>\
         \nUsage: Does a search on Wikipedia.'})
