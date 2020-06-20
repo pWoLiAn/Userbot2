@@ -62,5 +62,6 @@ asyncurban
 python-dateutil
 pyfiglet   
 jotquote
+justwatch
 csvfaker
 pymongo[srv]
