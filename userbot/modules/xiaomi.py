@@ -137,8 +137,8 @@ CMD_HELP.update({
      \nUsage : Get lastest Firmware\
 \n\n`.pb` (codename)\
      \nUsage : Get latest PBRP\
-\n\n`.spec` (codename)\
-     \nUsage : Get quick spec information about device\
+\n\n`.eu` (codename)\
+     \nUsage : Get latest miui eu\
 \n\n`.fastboot` (codename)\
      \nUsage : Get latest fastboot MIUI\
 \n\n`.recovery` (codename)\
