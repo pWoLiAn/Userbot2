@@ -33,7 +33,7 @@ async def all(event):
    
     
     CMD_HELP.update({
-    "all": "`.all` 
-        \nUsage: tag everyone in the chat."
+    "all": "`.all` "
+        "\nUsage: tag everyone in the chat."
     })
 
