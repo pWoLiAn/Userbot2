@@ -65,4 +65,8 @@ async def terminal_runner(w3m):
             BOTLOG_CHATID,
             "w3m with URL " + command + " was executed sucessfully",
         )
+    CMD_HELP.update({
+    "w3m": "`.w3m` site\
+        \nUsage: View sites as txt in tg itself without browser."
+})
       
