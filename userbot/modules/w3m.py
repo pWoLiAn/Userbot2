@@ -68,5 +68,5 @@ async def terminal_runner(w3m):
     CMD_HELP.update({
     "w3m": "`.w3m` site\
         \nUsage: View sites as txt in tg itself without browser."
-})
+    })
       
