@@ -187,3 +187,17 @@ async def dyno_usage(dyno):
                  f"-  {percentage}%**"
             )
             return True
+CMD_HELP.update({
+    "heroku":
+\n\n\"`.usage`"
+"\nUsage: Check your heroku dyno hours remaining"
+"\n\n`.set var` <NEW VAR> <VALUE>"
+"\nUsage: add new variable or update existing value variable"
+"\n!!! WARNING !!!, after setting a variable the bot will restarted"
+"\n\n`.get var` or .get var <VAR>"
+"\nUsage: get your existing varibles, use it only on your private group!"
+"\nThis returns all of your private information, please be caution..."
+"\n\n`.del var` <VAR>"
+"\nUsage: delete existing variable"
+"\n!!! WARNING !!!, after deleting variable the bot will restarted"
+})
