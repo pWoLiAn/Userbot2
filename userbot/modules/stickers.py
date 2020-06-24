@@ -30,13 +30,7 @@ KANGING_STR = [
     "Imprisoning this sticker...",
     "Mr.Steal Your Sticker is stealing this sticker... ",
     "Kanging your sticker..",
-    "Looks there's a girl...",
-    "Darling join my pack 😘",
-    "Hacker is hacking your pack....",
-    "I will kang now and you can't stop me",
-    "Pero kanger is back",
-    "Lets steal before owner sees it 😂",
-    "Hey can i kang? Hmm lets kang coz u can't stop me🤣",
+    "kanging cuz i can",
 ]
 
 
@@ -243,10 +237,6 @@ async def kang(args):
                 await conv.get_response()
                 # Ensure user doesn't get spamming notifications
                 await bot.send_read_acknowledge(conv.chat_id)
-
-        await args.edit(f"`kanged successfully!`\
-                        \nClick [here](t.me/addstickers/{packname})",
-                        parse_mode='md')
 
 
 async def resize_photo(photo):
