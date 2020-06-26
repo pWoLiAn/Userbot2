@@ -374,11 +374,11 @@ async def potocmd(event):
             if int(id) <= (len(photos)):
                 send_photos = await event.client.download_media(photos[id - 1])
                 await bot.send_file(event.chat_id, send_photos)
+                await event.delete()
             else:
                 await event.edit("`No photo found of that Nigga , now u Die`")
                 return
-                await event.delete()
-
+                
 @register(outgoing=True, pattern="^.res(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
