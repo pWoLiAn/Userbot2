@@ -593,6 +593,7 @@ async def lang(value):
             )
             return
     await value.edit(f"`Language for {scraper} changed to {LANG.title()}.`")
+    await value.delete()
     if BOTLOG:
         await value.client.send_message(
             BOTLOG_CHATID,
