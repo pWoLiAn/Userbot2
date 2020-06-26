@@ -862,7 +862,7 @@ CMD_HELP.update({
 \nUsage: Mutes the person in all groups you have in common with them.\
 \n\n.ungmute <username/userid> (or) reply to a message with .ungmute\
 \nUsage: Removes the person from the global mute list.\
-\n\n.delusers\
+\n\n.zombies\
 \nUsage: Searches for deleted accounts in a group. Use .delusers clean to remove deleted accounts from the group.\
 \n\n.admins\
 \nUsage: Retrieves a list of admins in the chat.\
