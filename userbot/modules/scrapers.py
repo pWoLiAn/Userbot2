@@ -592,7 +592,6 @@ async def lang(value):
                 f"`Invalid Language code !!`\n`Available language codes for TTS`:\n\n`{tts_langs()}`"
             )
             return
-    await value.edit(f"`Language for {scraper} changed to {LANG.title()}.`")
     await value.delete()
     if BOTLOG:
         await value.client.send_message(
