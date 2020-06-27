@@ -429,8 +429,6 @@ async def _(event):
     except asyncurban.WordNotFoundError:
         await event.edit("No result found for **" + word + "**")
        
-               
-
 @register(outgoing=True, pattern=r"^.tts(?: |$)([\s\S]*)")
 async def text_to_speech(query):
     """ For .tts command, a wrapper for Google Text-to-Speech. """
@@ -444,8 +442,8 @@ async def text_to_speech(query):
         await query.edit(
             "`Give a text or reply to a message for Text-to-Speech!`")
         return
- 
-        try:
+
+    try:
         message_id_to_reply = event.message.reply_to_msg_id
         if not message_id_to_reply:
             message_id_to_reply = None
@@ -471,12 +469,12 @@ async def text_to_speech(query):
         tts = gTTS(message, lang=TTS_LANG)
         tts.save("k.mp3")
     with open("k.mp3", "r"):
-        await query.client.send_file(query.chat_id, "k.mp3", reply_to=message_id_to_reply, voice_note=True)                                
+        await query.client.send_file(query.chat_id, "k.mp3", reply_to=message_id_to_reply, voice_note=True)
         os.remove("k.mp3")
         if BOTLOG:
             await query.client.send_message(
                 BOTLOG_CHATID, "Text to Speech executed successfully !")
-        await query.delete()
+        await query.delete()              
 
 
 @register(outgoing=True, pattern=r"^.trt(?: |$)([\s\S]*)")
