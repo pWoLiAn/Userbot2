@@ -471,8 +471,7 @@ async def text_to_speech(query):
         tts = gTTS(message, lang=TTS_LANG)
         tts.save("k.mp3")
     with open("k.mp3", "r"):
-        await query.client.send_file(query.chat_id, "k.mp3", 
-                                     reply_to=message_id_to_reply, voice_note=True)
+        await query.client.send_file(query.chat_id, "k.mp3", reply_to=message_id_to_reply, voice_note=True)                                
         os.remove("k.mp3")
         if BOTLOG:
             await query.client.send_message(
