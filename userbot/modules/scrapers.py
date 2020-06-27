@@ -445,7 +445,7 @@ async def text_to_speech(query):
             "`Give a text or reply to a message for Text-to-Speech!`")
         return
  
-    def ReplyCheck(message: Message):
+    def ReplyCheck(message: message):
      reply_id = None
      if message.reply_to_message:
              reply_id = message.reply_to_message.message_id
