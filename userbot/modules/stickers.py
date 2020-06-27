@@ -238,7 +238,7 @@ async def kang(args):
                 # Ensure user doesn't get spamming notifications
                 await bot.send_read_acknowledge(conv.chat_id)
                 
-      await args.delete()
+        await args.delete()
 
 async def resize_photo(photo):
     """ Resize the given photo to 512x512 """
