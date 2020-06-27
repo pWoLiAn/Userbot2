@@ -445,15 +445,10 @@ async def text_to_speech(query):
             "`Give a text or reply to a message for Text-to-Speech!`")
         return
  
-    def ReplyCheck(message: message):
-     reply_id = None
-     if message.reply_to_message:
-             reply_id = message.reply_to_message.message_id
-     elif not message.from_user.is_self:
-             reply_id = message.message_id
-     return reply_id
-
-    try:
+        try:
+        message_id_to_reply = event.message.reply_to_msg_id
+        if not message_id_to_reply:
+            message_id_to_reply = None
         gTTS(message, lang=TTS_LANG)
     except AssertionError:
         await query.edit(
@@ -476,9 +471,8 @@ async def text_to_speech(query):
         tts = gTTS(message, lang=TTS_LANG)
         tts.save("k.mp3")
     with open("k.mp3", "r"):
-        await query.client.send_voice(query.chat_id, voice="k.mp3",  
-
-        reply_to_message_id=ReplyCheck)
+        await query.client.send_file(query.chat_id, "k.mp3", 
+                                     reply_to=message_id_to_reply, voice_note=True)
         os.remove("k.mp3")
         if BOTLOG:
             await query.client.send_message(
