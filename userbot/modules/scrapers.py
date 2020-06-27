@@ -444,7 +444,7 @@ async def text_to_speech(query):
         return
 
     try:
-        message_id_to_reply = event.message.reply_to_msg_id
+        message_id_to_reply = query.message.reply_to_msg_id
         if not message_id_to_reply:
             message_id_to_reply = None
         gTTS(message, lang=TTS_LANG)
