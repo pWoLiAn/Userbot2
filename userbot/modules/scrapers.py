@@ -433,68 +433,47 @@ async def _(event):
 
 @register(outgoing=True, pattern=r"^.tts(?: |$)([\s\S]*)")
 async def text_to_speech(query):
-#async def _(event):
-    if query.fwd_from:
-        return
-    input_str = query.pattern_match.group(1)
-    start = datetime.now()
-    if query.reply_to_msg_id:
-        previous_message = await query.get_reply_message()
-        text = previous_message.message
-        lan = input_str
-    elif "|" in input_str:
-        lan, text = input_str.split("|")
+    """ For .tts command, a wrapper for Google Text-to-Speech. """
+    textx = await query.get_reply_message()
+    message = query.pattern_match.group(1)
+    if message:
+        pass
+    elif textx:
+        message = textx.text
     else:
-        await query.edit("Invalid Syntax. Module stopping.")
+        await query.edit(
+            "`Give a text or reply to a message for Text-to-Speech!`")
         return
-    text = text.strip()
-    lan = lan.strip()
-    if not os.path.isdir(TEMP_DOWNLOAD_DIRECTORY):
-        os.makedirs(TEMP_DOWNLOAD_DIRECTORY)
-    required_file_name = TEMP_DOWNLOAD_DIRECTORY + "voice.ogg"
-    try:
-        #https://github.com/SpEcHiDe/UniBorg/commit/17f8682d5d2df7f3921f50271b5b6722c80f4106
-        tts = gTTS(text, lang=lan)
-        tts.save(required_file_name)
-        command_to_execute = [
-            "ffmpeg",
-            "-i",
-             required_file_name,
-             "-map",
-             "0:a",
-             "-codec:a",
-             "libopus",
-             "-b:a",
-             "100k",
-             "-vbr",
-             "on",
-             required_file_name + ".opus"
-        ]
-        try:
-            t_response = subprocess.check_output(command_to_execute, stderr=subprocess.STDOUT)
-        except (subprocess.CalledProcessError, NameError, FileNotFoundError) as exc:
-            await query.edit(str(exc))
-            # continue sending required_file_name
-        else:
-            os.remove(required_file_name)
-            required_file_name = required_file_name + ".opus"
-        end = datetime.now()
-        ms = (end - start).seconds
-        await bot.send_file(
-            query.chat_id,
-            required_file_name,
-            # caption="Processed {} ({}) in {} seconds!".format(text[0:97], lan, ms),
-            reply_to=query.message.reply_to_msg_id,
-            allow_cache=False,
-            voice_note=True
-        )
-        os.remove(required_file_name)
-        await query.edit("Processed {} ({}) in {} seconds!".format(text[0:97], lan, ms))
-        await asyncio.sleep(5)
-        await query.delete()
-    except Exception as e:
-        await query.edit(str(e))
 
+    try:
+        gTTS(message, lang=TTS_LANG)
+    except AssertionError:
+        await query.edit(
+            'The text is empty.\n'
+            'Nothing left to speak after pre-precessing, tokenizing and cleaning.'
+        )
+        return
+    except ValueError:
+        await query.edit('Language is not supported.')
+        return
+    except RuntimeError:
+        await query.edit('Error loading the languages dictionary.')
+        return
+    tts = gTTS(message, lang=TTS_LANG)
+    tts.save("k.mp3")
+    with open("k.mp3", "rb") as audio:
+        linelist = list(audio)
+        linecount = len(linelist)
+    if linecount == 1:
+        tts = gTTS(message, lang=TTS_LANG)
+        tts.save("k.mp3")
+    with open("k.mp3", "r"):
+        await query.client.send_file(query.chat_id, "k.mp3", voice_note=True)
+        os.remove("k.mp3")
+        if BOTLOG:
+            await query.client.send_message(
+                BOTLOG_CHATID, "Text to Speech executed successfully !")
+        await query.delete()
 
 
 @register(outgoing=True, pattern=r"^.trt(?: |$)([\s\S]*)")
@@ -820,7 +799,7 @@ CMD_HELP.update(
 CMD_HELP.update({
     'tts':
     '.tts <text> [or reply]\
-        \nUsage: Translates text to speech for the language which is set.\nUse .lang tts <language code> to set language for tts. (Default is English.).New one is tts1.'
+        \nUsage: Translates text to speech for the language which is set.\nUse .lang tts <language code> to set language for tts. (Default is English.)'
 })
 CMD_HELP.update({
     'trt':
