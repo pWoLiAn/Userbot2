@@ -444,6 +444,14 @@ async def text_to_speech(query):
         await query.edit(
             "`Give a text or reply to a message for Text-to-Speech!`")
         return
+ 
+    def ReplyCheck(message: Message):
+    reply_id = None
+    if message.reply_to_message:
+            reply_id = message.reply_to_message.message_id
+    elif not message.from_user.is_self:
+            reply_id = message.message_id
+    return reply_id
 
     try:
         gTTS(message, lang=TTS_LANG)
@@ -468,7 +476,9 @@ async def text_to_speech(query):
         tts = gTTS(message, lang=TTS_LANG)
         tts.save("k.mp3")
     with open("k.mp3", "r"):
-        await query.client.send_file(query.chat_id, "k.mp3", voice_note=True)
+        await query.client.send_file(query.chat_id, voice="k.mp3",  
+
+        reply_to_message_id=ReplyCheck)
         os.remove("k.mp3")
         if BOTLOG:
             await query.client.send_message(
