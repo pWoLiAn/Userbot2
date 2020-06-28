@@ -132,10 +132,11 @@ async def pipcheck(pip):
 async def amireallyalive(alive):
     """ For .alive command, check if the bot is running.  """
     logo = ALIVE_LOGO
-    await bot.send_file(alive.chat_id, logo, caption=output)
-    await alive.edit("`Oneechaaan Daaaaaaiskiiiiiiii!!!!`\n\n"
+    output=("`Oneechaaan Daaaaaaiskiiiiiiii!!!!`\n\n"
             f"====================================\n\n"
             f"`Tis sexy waifu is owned by the noob ni🅱️🅱️a ` {DEFAULTUSER} ` uwu `")
+    await bot.send_file(alive.chat_id, logo, caption=output)
+    await alive.delete()
 
 
 @register(outgoing=True, pattern="^.aliveu")
