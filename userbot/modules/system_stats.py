@@ -12,7 +12,7 @@ from shutil import which
 from os import remove
 from telethon import version
 
-from userbot import CMD_HELP, ALIVE_NAME
+from userbot import CMD_HELP, ALIVE_NAME, ALIVE_LOGO, bot
 from userbot.events import register
 
 # ================= CONSTANT =================
@@ -131,8 +131,11 @@ async def pipcheck(pip):
 @register(outgoing=True, pattern="^.alive$")
 async def amireallyalive(alive):
     """ For .alive command, check if the bot is running.  """
-    await alive.edit("`Meh.I'm alive.Now DND & lemme watch some hentai in peace...`\n\n"
-            f"`Owned by the noob ni🅱️🅱️a ` {DEFAULTUSER} ` uwu `")
+    logo = ALIVE_LOGO
+    await bot.send_file(alive.chat_id, logo, caption=output)
+    await alive.edit("`Oneechaaan Daaaaaaiskiiiiiiii!!!!`\n\n"
+            f"====================================\n\n"
+            f"`Tis sexy waifu is owned by the noob ni🅱️🅱️a ` {DEFAULTUSER} ` uwu `")
 
 
 @register(outgoing=True, pattern="^.aliveu")
