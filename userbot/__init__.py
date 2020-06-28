@@ -62,9 +62,6 @@ BOTLOG_CHATID = int(os.environ.get("BOTLOG_CHATID", None))
 BOTLOG = sb(os.environ.get("BOTLOG", "False"))
 LOGSPAMMER = sb(os.environ.get("LOGSPAMMER", "False"))
 
-#Bot version
-BOT_VER = os.environ.get("BOT_VER", "3.1")
-
 # Default .alive logo
 ALIVE_LOGO = os.environ.get(
     "ALIVE_LOGO",
