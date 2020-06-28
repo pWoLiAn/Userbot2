@@ -65,7 +65,7 @@ LOGSPAMMER = sb(os.environ.get("LOGSPAMMER", "False"))
 # Default .alive logo
 ALIVE_LOGO = os.environ.get(
     "ALIVE_LOGO",
-    "https://telegra.ph/Awk-06-28")
+    "https://telegra.ph/file/7e99714b6ff8b9b7f299a.jpg")
 
 # Bleep Blop, this is a bot ;)
 PM_AUTO_BAN = sb(os.environ.get("PM_AUTO_BAN", "False"))
