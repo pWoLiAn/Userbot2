@@ -101,7 +101,7 @@ async def sed(command):
             await command.edit("B O I! [Learn Regex](https://regexone.com)")
             return
         if text:
-            await command.edit(f"Did you mean: \n{text}")
+            await command.edit(f"{text}")
 
 
 CMD_HELP.update({
