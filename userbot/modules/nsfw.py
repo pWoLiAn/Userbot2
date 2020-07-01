@@ -1,39 +1,34 @@
-# Credits to https://t.me/TheHardGamer
-# Edited by @AnggaR96s
+# Imported from Rin :D
 
-import os
-import urllib
-import requests
+
+
+
 import nekos
 from asyncio import sleep
 from userbot import bot, CMD_HELP
 from userbot.events import register
 
 
-@register(outgoing=True, pattern="^\.boobs(?: |$)(.*)")
-async def boobs(e):
-    await e.edit("`Finding some big boobs...`")
-    await sleep(3)
+@register(outgoing=True, pattern="^\.pgif(?: |$)(.*)")
+async def pussyg(e):
+    await e.edit("`Finding some pussy gifs...`")
+    await sleep(2)
     target = 'pussy'
     await bot.send_file(e.chat_id, nekos.img(target))
-    await e.delete()
+   
 
-@register(outgoing=True, pattern="^\.butts(?: |$)(.*)")
-async def butts(e):
-    await e.edit("`Finding some beautiful butts...`")
-    await sleep(3)
-    await e.edit("`Sending some beautiful butts...`")
-    nsfw = requests.get('http://api.obutts.ru/noise/1').json()[0]["preview"]
-    urllib.request.urlretrieve("http://media.obutts.ru/{}".format(nsfw), "*.jpg")
-    os.rename('*.jpg', 'butts.jpg')
-    await bot.send_file(e.chat_id, "butts.jpg")
-    os.remove("butts.jpg")
-    await e.delete()
+@register(outgoing=True, pattern="^\.pjpg(?: |$)(.*)")
+async def pussyp(e):
+    await e.edit("`Finding some pussy pics...`")
+    await sleep(2)
+    target = 'pussy_jpg'
+    await bot.send_file(e.chat_id, nekos.img(target))
+    
 
 CMD_HELP.update({
     'nsfw':
-    ">`.boobs`"
-    "\nUsage: Get boobs image.\n"
-    ">`.butts`"
-    "\nUsage: Get butts image."
+    "`.pgif`"
+    "\nUsage: Get pussy gif.\n"
+    "`.pjpg`"
+    "\nUsage: Get pussy image."
 })
