@@ -11,11 +11,11 @@ from userbot import CMD_HELP
 
 _pats = []
 
-@register(outgoing=True, pattern=r'\.(l?[gp]?)pat(?:(?: \n?|\n)([\s\S]+))?')
+@register(outgoing=True, pattern=r"^.pat(?: |$)")
 async def pat(e):
     global _pats
-    switch = e.pattern_match.group(1)
-    caption = e.pattern_match.group(2)
+    
+    
     url = 'https://headp.at/js/pats.json'
     if not _pats:
         async with aiohttp.ClientSession() as session:
@@ -23,15 +23,12 @@ async def pat(e):
                 resp = await raw_resp.text()
         _pats = json.loads(resp)
     pats = _pats
-    if 'g' in switch:
-        pats = [i for i in pats if os.path.splitext(i)[1] == '.gif']
-    elif 'p' in switch:
-        c = lambda j:os.path.splitext(j)[1] in ['.png', '.jpg', '.jpeg']
-        pats = [i for i in pats if c(i)]
+    
+    pats = [i for i in pats if os.path.splitext(i)[1] == '.gif']
+    
     pat = random.choice(pats)
     link = f'https://headp.at/pats/{urlencode(pat)}'
-    if 'l' in switch:
-        caption = f'{caption or ""}\n\n{link}'
+    
     await asyncio.wait([
         e.respond(file=link, reply_to=e.reply_to_msg_id),
         e.delete()
@@ -41,5 +38,5 @@ async def pat(e):
     CMD_HELP.update({
     'pat':
     '.pat\
-\nUsage: sends random pat pics & gifs.'
+\nUsage: sends random pat gifs.'
 })
