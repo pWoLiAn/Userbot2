@@ -1205,7 +1205,7 @@ CMD_HELP.update({
 \n\n.shg\
 \nUsage: Shrug at it !!\
 \n\n.runs\
-\nUsage: Run, run, RUNNN! [`.disable runs`: disable | `.enable runs`: enable]\
+\nUsage: Run, run, RUNNN! \
 \n\n.metoo\
 \nUsage: Haha yes\
 \n\n.mock\
