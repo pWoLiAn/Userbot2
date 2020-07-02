@@ -133,7 +133,7 @@ async def amireallyalive(alive):
     """ For .alive command, check if the bot is running.  """
     logo = ALIVE_LOGO
     output=("`Oneechaaan Daaaaaaiskiiiiiiii!!!!`\n"
-            f"===================================\n"
+            f"============================\n"
             f"`Tis sexy waifu is alive and vibin' : Owned by the noob ni🅱️🅱️a ` {DEFAULTUSER} ` uwu `")
     await bot.send_file(alive.chat_id, logo, caption=output)
     await alive.delete()
