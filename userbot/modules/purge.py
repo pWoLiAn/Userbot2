@@ -98,15 +98,15 @@ async def editer(edit):
     chat = await edit.get_input_chat()
     self_id = await edit.client.get_peer_id('me')
     string = str(message[6:])
-    i = 1
-    async for message in edit.client.iter_messages(chat, self_id):
-        if i == 2:
-            await message.edit(string)
+    msg_src = await edit.get_reply_message()
+    
+    if  edit.reply_to_msg_id:
+            await msg_src.edit(string)
             await edit.delete()
-            break
-        i = i + 1
-    if BOTLOG:
-        await edit.client.send_message(BOTLOG_CHATID,
+            
+        
+            if BOTLOG:
+              await edit.client.send_message(BOTLOG_CHATID,
                                        "Edit query was executed successfully")
 
 
@@ -143,7 +143,7 @@ CMD_HELP.update({"del": ".del\
 CMD_HELP.update({
     'edit':
     ".edit <newmessage>\
-\nUsage: Replace your last message with <newmessage>."
+\nUsage: Replace any of ur prev message with <newmessage>."
 })
 
 CMD_HELP.update({
