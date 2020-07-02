@@ -86,6 +86,8 @@ GITHUB_ACCESS_TOKEN = os.environ.get("GITHUB_ACCESS_TOKEN", None)
 UPSTREAM_REPO_URL = os.environ.get(
     "UPSTREAM_REPO_URL",
     "https://github.com/Devp73/Userbot1.git")
+UPSTREAM_REPO_BRANCH = os.environ.get(
+    "UPSTREAM_REPO_BRANCH", "master")
 
 # Custom(forked) Repo URL to push updates to.
 GIT_URL = os.environ.get("GIT_URL", None)
