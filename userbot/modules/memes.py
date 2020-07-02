@@ -747,6 +747,26 @@ async def copypasta(cp_e):
         await cp_e.edit(reply_text)
 
 
+@register(outgoing=True, pattern="^.shout(?: |$)(.*)")
+async def shout(args):
+    if args.fwd_from:
+        return
+    else:
+        msg = "```"
+        messagestr = args.text
+        messagestr = messagestr[7:]
+        text = " ".join(messagestr)
+        result = []
+        result.append(' '.join([s for s in text]))
+        for pos, symbol in enumerate(text[1:]):
+            result.append(symbol + ' ' + '  ' * pos + symbol)
+        result = list("\n".join(result))
+        result[0] = text[0]
+        result = "".join(result)
+        msg = "\n" + result
+        await args.edit("`"+msg+"`")  
+
+
 @register(outgoing=True, pattern="^.vapor(?: |$)(.*)")
 async def vapor(vpr):
     """ Vaporize everything! """
@@ -1196,6 +1216,8 @@ CMD_HELP.update({
 \nUsage: Pay Respects.also .iff\
 \n\n.bt\
 \nUsage: Believe me, you will find this useful.\
+\n\n.shout\
+\nUsage: shouts stuff.\
 \n\n.smk <text/reply>\
 \nUsage: A shit module for ツ , who cares.\
 \n\n.type\
