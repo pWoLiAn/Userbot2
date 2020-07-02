@@ -33,7 +33,7 @@ async def pat(e):
     if 'l' in switch:
         caption = f'{caption or ""}\n\n{link}'
     await asyncio.wait([
-        e.respond(caption, file=link, reply_to=e.reply_to_msg_id),
+        e.respond(file=link, reply_to=e.reply_to_msg_id),
         e.delete()
     ])
 
