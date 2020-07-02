@@ -30,7 +30,6 @@ async def pat(e):
         pats = [i for i in pats if c(i)]
     pat = random.choice(pats)
     link = f'https://headp.at/pats/{urlencode(pat)}'
-    if 'l' in switch:
     await asyncio.wait([
         e.respond(file=link, reply_to=e.reply_to_msg_id),
         e.delete()
