@@ -8,7 +8,7 @@ import random
 from urllib.parse import quote as urlencode
 from telethon import events
 from userbot.events import register
-from userbot import CMD_HELP
+from userbot import CMD_HELP, bot
 from asyncio import sleep
 
 
