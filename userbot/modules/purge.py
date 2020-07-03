@@ -103,11 +103,13 @@ async def editer(edit):
     if  edit.reply_to_msg_id:
             await msg_src.edit(string)
             await edit.delete()
-            
-        
             if BOTLOG:
               await edit.client.send_message(BOTLOG_CHATID,
                                        "Edit query was executed successfully")
+    else:
+            await edit.edit("`Reply to a msg to edit it.`")
+            await sleep(2)
+            await edit.delete()
 
 
 @register(outgoing=True, pattern="^.sd")
