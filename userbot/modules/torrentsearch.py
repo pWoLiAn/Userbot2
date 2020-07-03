@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup as bs
 import requests
 import json
 from userbot.events import register 
+from userbot import CMD_HELP
 
 
 def dogbin(magnets):
