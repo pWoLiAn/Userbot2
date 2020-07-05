@@ -114,7 +114,7 @@ async def whoizme(e):
         await asyncio.sleep(0.3)
         await e.edit("Nikal lavde pehli fursat me nikal 🤬")
 
-@register(outgoing=True, pattern="^.kill$")
+@register(outgoing=True, pattern="^.awm$")
 async def whoizme(e):
     if not e.text[0].isalpha() and e.text[0] not in ("/", "#", "@", "!"):
         await e.edit("Target")
@@ -165,6 +165,5 @@ CMD_HELP.update({
 \nUsage: As if text spam was not enough !!\
 \n\n.delayspam <delay> <count> <text>\
 \nUsage: .spam but with custom delay.\
-\n\n\nNOTE : Spam at your own risk !!\
-\nAlso .gangsta,.upro,.kill and .nikal"
+\n\n\nNOTE : Spam at your own risk !!"
 })
