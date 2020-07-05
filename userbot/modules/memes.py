@@ -1226,9 +1226,9 @@ CMD_HELP.update({
 \nUsage: Let me Google that for you real quick !!\
 \n\n.decide\
 \nUsage: Make a quick decision.\
-\n\n.gey/noob/rape/hack\
+\n\n.gey/noob/rape/hack/gangsta/nikal/awm\
 \nUsage: You already got that! Ain't?.\
-\n\n.pro\
+\n\n.pro,.upro\
 \nUsage: If you think you're pro, try this.\
 \n\n.insult\
 \nUsage: Protects you from unwanted peeps.\
