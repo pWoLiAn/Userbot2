@@ -79,3 +79,4 @@ justwatch
 deezloader
 zipfile38
 nekos.py
+jikanpy
