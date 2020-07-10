@@ -55,6 +55,16 @@ async def pussyp(e):
     await bot.send_file(e.chat_id, nekos.img(target), reply_to=e.reply_to_msg_id)
     await e.delete()
 
+
+@register(outgoing=True, pattern="^\.cum(?: |$)(.*)")
+async def cum(e):
+    await e.edit("`Finding some cum gifs...`")
+    await sleep(2)
+    target = 'cum'
+    await bot.send_file(e.chat_id, nekos.img(target), reply_to=e.reply_to_msg_id)
+    await e.delete()
+
+
 CMD_HELP.update({
     'weeb':
     "`.pgif`"
@@ -62,5 +72,7 @@ CMD_HELP.update({
     "`.pjpg`"
     "\nUsage: Get pussy image.\n"
     "`.pat`"
-    "\nUsage: Get random pat gif."
+    "\nUsage: Get random pat gif.\n"
+    "`.cum`"
+    "\nUsage: Get random cum gif."
 })
