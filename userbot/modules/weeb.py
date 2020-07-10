@@ -139,5 +139,7 @@ CMD_HELP.update({
     "`.pat`"
     "\nUsage: Get random pat gif.\n"
     "`.cum`"
-    "\nUsage: Get random cum gif."
+    "\nUsage: Get random cum gif.\n"
+    "`.anime`"
+    "\nUsage: Get details about given anime."
 })
