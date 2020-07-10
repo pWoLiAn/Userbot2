@@ -76,7 +76,7 @@ async def asearch(event):
     rep += f"<b>Rating:</b> <code>{rating}</code>\n\n"
     rep += f"<a href='{image_url}'>\u200c</a>"
     rep += f"<i>{synopsis}</i>\n"
-    await event.edit(rep, parse_mode=ParseMode.HTML)
+    await event.edit(rep, parse_mode='html')
     
 
 @register(outgoing=True, pattern=r"^.pat(?: |$)")
