@@ -123,3 +123,9 @@ async def main(event):
         os.system("rm -rf donottouch.jpg")
 
         await asyncio.sleep(3600) #Edit this to your required needs
+
+CMD_HELP.update({
+    "randompp":
+    "`.randompp`\
+    \nUsage: change pp every 10 min."
+})
