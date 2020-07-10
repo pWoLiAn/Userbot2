@@ -16,6 +16,8 @@ from time import sleep
 
 from userbot.events import register 
 
+from userbot import CMD_HELP
+
 COLLECTION_STRING = [
 
   "epic-fantasy-wallpaper",
