@@ -5,6 +5,8 @@ import json
 import aiohttp
 import asyncio
 import random
+from jikanpy import Jikan
+from jikanpy.exceptions import APIException
 from urllib.parse import quote as urlencode
 from telethon import events
 from userbot.events import register
@@ -13,6 +15,69 @@ from asyncio import sleep
 
 
 _pats = []
+jikan = Jikan()
+
+
+@run_async
+def anime(bot: Bot, update: Update, args):
+    msg = update.effective_message
+    query = " ".join(args)
+    res = ""
+    try:
+        res = jikan.search("anime", query)
+    except APIException:
+        msg.reply_text("Error connecting to the API. Please try again!")
+        return ""
+    try:
+        res = res.get("results")[0].get("mal_id") # Grab first result
+    except APIException:
+        msg.reply_text("Error connecting to the API. Please try again!")
+        return ""
+    if res:
+        anime = jikan.anime(res)
+        title = anime.get("title")
+        japanese = anime.get("title_japanese")
+        type = anime.get("type")
+        duration = anime.get("duration")
+        synopsis = anime.get("synopsis")
+        source = anime.get("source")
+        status = anime.get("status")
+        episodes = anime.get("episodes")
+        score = anime.get("score")
+        rating = anime.get("rating")
+        genre_lst = anime.get("genres")
+        genres = ""
+        for genre in genre_lst:
+            genres += genre.get("name") + ", "
+        genres = genres[:-2]
+        studios = ""
+        studio_lst = anime.get("studios")
+        for studio in studio_lst:
+            studios += studio.get("name") + ", "
+        studios = studios[:-2]
+        duration = anime.get("duration")
+        premiered = anime.get("premiered")
+        image_url = anime.get("image_url")
+        url = anime.get("url")
+        trailer = anime.get("trailer_url")
+    else:
+        msg.reply_text("No results found!")
+        return
+    rep = f"<b>{title} ({japanese})</b>\n"
+    rep += f"<b>Type:</b> <code>{type}</code>\n"
+    rep += f"<b>Source:</b> <code>{source}</code>\n"
+    rep += f"<b>Status:</b> <code>{status}</code>\n"
+    rep += f"<b>Genres:</b> <code>{genres}</code>\n"
+    rep += f"<b>Episodes:</b> <code>{episodes}</code>\n"
+    rep += f"<b>Duration:</b> <code>{duration}</code>\n"
+    rep += f"<b>Score:</b> <code>{score}</code>\n"
+    rep += f"<b>Studio(s):</b> <code>{studios}</code>\n"
+    rep += f"<b>Premiered:</b> <code>{premiered}</code>\n"
+    rep += f"<b>Rating:</b> <code>{rating}</code>\n\n"
+    rep += f"<a href='{image_url}'>\u200c</a>"
+    rep += f"<i>{synopsis}</i>\n"
+    msg.reply_text(rep, parse_mode=ParseMode.HTML, reply_markup=InlineKeyboardMarkup(keyb))
+    
 
 @register(outgoing=True, pattern=r"^.pat(?: |$)")
 async def pat(e):
