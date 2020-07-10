@@ -18,20 +18,20 @@ _pats = []
 jikan = Jikan()
 
 
-@run_async
-def anime(bot: Bot, update: Update, args):
-    msg = update.effective_message
-    query = " ".join(args)
+
+@register(outgoing=True, pattern=r"^.anime (.*)")
+async def asearch(event):
+    msg = event.pattern_match.group(1)
     res = ""
     try:
-        res = jikan.search("anime", query)
+        res = jikan.search("anime", msg)
     except APIException:
-        msg.reply_text("Error connecting to the API. Please try again!")
+        await event.edit("Error connecting to the API. Please try again!")
         return ""
     try:
         res = res.get("results")[0].get("mal_id") # Grab first result
     except APIException:
-        msg.reply_text("Error connecting to the API. Please try again!")
+        await event.edit("Error connecting to the API. Please try again!")
         return ""
     if res:
         anime = jikan.anime(res)
@@ -61,7 +61,7 @@ def anime(bot: Bot, update: Update, args):
         url = anime.get("url")
         trailer = anime.get("trailer_url")
     else:
-        msg.reply_text("No results found!")
+        await event.edit("No results found!")
         return
     rep = f"<b>{title} ({japanese})</b>\n"
     rep += f"<b>Type:</b> <code>{type}</code>\n"
@@ -76,7 +76,7 @@ def anime(bot: Bot, update: Update, args):
     rep += f"<b>Rating:</b> <code>{rating}</code>\n\n"
     rep += f"<a href='{image_url}'>\u200c</a>"
     rep += f"<i>{synopsis}</i>\n"
-    msg.reply_text(rep, parse_mode=ParseMode.HTML, reply_markup=InlineKeyboardMarkup(keyb))
+    await event.edit(rep)
     
 
 @register(outgoing=True, pattern=r"^.pat(?: |$)")
