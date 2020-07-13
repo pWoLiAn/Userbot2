@@ -75,7 +75,9 @@ async def log(log_text):
 @register(outgoing=True, pattern="^.kickme$")
 async def kickme(leave):
     """ Basically it's .kickme command """
-    await leave.edit("It's time I iz going away")
+    await leave.edit("`Kicked myself LoL`")
+    await sleep(2)
+    await leave.delete()
     await leave.client.kick_participant(leave.chat_id, 'me')
 
 
