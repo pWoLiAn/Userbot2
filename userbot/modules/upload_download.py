@@ -409,8 +409,8 @@ CMD_HELP.update({
 \nUsage: Downloads file to the server.\
 \n\n.upload <path in server>\
 \nUsage: Uploads a locally stored file to the chat.\
-\n.uploadir <path in server>
+\n.uploadir <path in server>\
 \nUsage: Uploads everything in a folder.\
-\n.uploadas stream|vn|all
+\n.uploadas(stream|vn|all)\
 \nUsage: Upload but with parameters. "
 })
