@@ -336,7 +336,8 @@ async def gsearch(q_event):
 
     search_args = (str(query), 1)
     googsearch = GoogleSearch()
-    gresults = await googsearch.async_search(*search_args, cache=False)
+    googsearch.clear_cache()
+    gresults = await googsearch.async_search(*search_args)
     msg = ""
     for i in range(1, 6):
         try:
