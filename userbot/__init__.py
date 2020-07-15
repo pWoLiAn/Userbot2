@@ -235,5 +235,6 @@ COUNT_PM = {}
 LASTMSG = {}
 ENABLE_KILLME = True
 CMD_HELP = {}
+CMD_LIST = {}
 ISAFK = False
 AFKREASON = None
