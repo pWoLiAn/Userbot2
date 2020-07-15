@@ -79,7 +79,7 @@ rm -r /root/.cache
 #
 
 
-RUN git clone https://github.com/pWoLiAn/Userbot2.git /root/userbot
+RUN git clone https://github.com/pWoLiAn/Userbot2 /root/userbot
 RUN mkdir /root/userbot/.bin
 WORKDIR /root/userbot/
 ENV PATH="/root/userbot/.bin:$PATH"
