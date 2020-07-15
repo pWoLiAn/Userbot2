@@ -159,7 +159,7 @@ def register(**args):
     return decorator
    
    
-   def grp_exclude(force_exclude=False):
+    def grp_exclude(force_exclude=False):
     """ Check if the chat is excluded. """
     def decorator(func):
         async def wrapper(check):
@@ -186,3 +186,6 @@ def register(**args):
         return wrapper
 
     return decorator
+
+   
+   
