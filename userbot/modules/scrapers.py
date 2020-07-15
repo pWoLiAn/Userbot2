@@ -57,7 +57,7 @@ from youtube_dl.utils import (DownloadError, ContentTooShortError,
                               UnavailableVideoError, XAttrMetadataError)
 from asyncio import sleep
 from userbot import CMD_HELP, BOTLOG, BOTLOG_CHATID, YOUTUBE_API_KEY, CHROME_DRIVER, GOOGLE_CHROME_BIN, bot, REM_BG_API_KEY, TEMP_DOWNLOAD_DIRECTORY, OCR_SPACE_API_KEY, LOGS
-from userbot.events import register
+from userbot.events import register, grp_exclude
 from telethon.tl.types import DocumentAttributeAudio
 from userbot.utils import progress, humanbytes, time_formatter, chrome, googleimagesdownload
 import subprocess
@@ -318,6 +318,7 @@ async def imdb(e):
 
 
 @register(outgoing=True, pattern=r"^.google(?: |$)(.*)")
+@grp_exclude()
 async def gsearch(q_event):
     """ For .google command, do a Google search. """
     textx = await q_event.get_reply_message()
