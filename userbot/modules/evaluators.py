@@ -15,6 +15,7 @@ from telethon import events, errors, functions, types
 import inspect
 import traceback
 import io
+import sys
 
 
 @register(outgoing=True, pattern="^.eval(?: |$)(.*)")
