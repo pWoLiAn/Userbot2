@@ -131,6 +131,13 @@ execute. Use .help exec for an example.```")
             BOTLOG_CHATID,
             "Exec query " + codepre + " was executed successfully")
 
+async def aexec(code, run_q):
+    exec(
+        f'async def __aexec(run_q): ' +
+        ''.join(f'\n {l}' for l in code.split('\n'))
+    )
+    return await locals()['__aexec'](run_q)
+
 
 @register(outgoing=True, pattern="^.term(?: |$)(.*)")
 async def terminal_runner(term):
