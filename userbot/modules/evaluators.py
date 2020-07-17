@@ -174,7 +174,7 @@ async def _(event):
 
     final_output = "**EVAL**: `{}` \n\n **OUTPUT**: \n`{}` \n".format(cmd, evaluation)
 
-    if len(final_output) > Config.MAX_MESSAGE_SIZE_LIMIT:
+    if len(final_output) > 4096:
         with io.BytesIO(str.encode(final_output)) as out_file:
             out_file.name = "eval.text"
             await borg.send_file(
@@ -257,6 +257,6 @@ async def terminal_runner(term):
 
 CMD_HELP.update({"eval": ".eval 2 + 3\nUsage: Evalute mini-expressions."})
 CMD_HELP.update(
-    {"exec": ".exec print('hello')\nUsage: Execute small python scripts."})
+    {"exec": ".exec print('hello')\nUsage: Execute small python scripts.Use .ps for uniborg one"})
 CMD_HELP.update(
     {"term": ".term ls\nUsage: Run bash commands and scripts on your server."})
