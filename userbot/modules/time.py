@@ -52,9 +52,9 @@ async def time_func(tdata):
     tz_num = tdata.pattern_match.group(2)
 
     t_form = "%H:%M"
-    c_name = None
+    
 
-    if len(con) > 4:
+    if con:
         try:
             c_name = c_n[con]
         except KeyError:
@@ -115,9 +115,9 @@ async def date_func(dat):
     tz_num = dat.pattern_match.group(2)
 
     d_form = "%d/%m/%y - %A"
-    c_name = ''
+    
 
-    if len(con) > 4:
+    if con:
         try:
             c_name = c_n[con]
         except KeyError:
