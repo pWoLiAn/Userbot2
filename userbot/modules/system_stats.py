@@ -41,9 +41,10 @@ async def sysdetails(sysd):
             await sysd.edit("`Hella install neofetch first kthx`")
 
 
-@register(outgoing=True, pattern="^.botver$")
-async def bot_ver(event):
+@register(outgoing=True, pattern="^.alive$")
+async def alive(event):
     """ For .botver command, get the bot version. """
+    logo = ALIVE_LOGO
     if not event.text[0].isalpha() and event.text[0] not in ("/", "#", "@",
                                                              "!"):
         if which("git") is not None:
@@ -71,16 +72,20 @@ async def bot_ver(event):
             revout = str(stdout.decode().strip()) \
                 + str(stderr.decode().strip())
 
-            await event.edit("`Userbot Version: "
+            output=(f"`{DEFAULTUSER}-nee daaiskii!`\n"
+                             "`Git Version:\n "
                              f"{verout}"
                              "` \n"
                              "`Revision: "
                              f"{revout}"
                              "` \n"
-                             "`UserBot Version: v1.0`")
+                             "`UserBot Version: PPE-v69.420`")
+            await bot.send_file(event.chat_id, logo, caption=output)
+            await event.delete()
         else:
             await event.edit(
-                "Shame that you don't have Git, you're running v1.0 anyway!")
+                "I'm alive but u don't have Git LoL!")
+
 
 
 @register(outgoing=True, pattern="^.pip(?: |$)(.*)")
@@ -126,17 +131,6 @@ async def pipcheck(pip):
                                "`\n**Result: **\n`No Result Returned/False`")
         else:
             await pip.edit("`Use .help pip to see an example`")
-            
-
-@register(outgoing=True, pattern="^.alive$")
-async def amireallyalive(alive):
-    """ For .alive command, check if the bot is running.  """
-    logo = ALIVE_LOGO
-    output=("`Oneechaaan Daaaaaaiskiiiiiiii!!!!`\n"
-            f"============================\n"
-            f"`Tis sexy waifu is alive and vibin' : Owned by the noob ni🅱️🅱️a ` {DEFAULTUSER} ` uwu `")
-    await bot.send_file(alive.chat_id, logo, caption=output)
-    await alive.delete()
 
 
 @register(outgoing=True, pattern="^.aliveu")
