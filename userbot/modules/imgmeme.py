@@ -105,9 +105,9 @@ async def tweets(text1,text2):
 @register(pattern="^.trump(?: |$)(.*)", outgoing=True)
 async def nekobot(cat):
     text = cat.pattern_match.group(1)
-    reply_to_id = cat.message
-    if cat.reply_to_msg_id:
-        reply_to_id = await cat.get_reply_message()
+    message_id_to_reply = cat.message.reply_to_msg_id
+    if not message_id_to_reply:
+            message_id_to_reply = None
     if not text:
         if cat.is_reply:
             if not reply_to_id.media:
@@ -126,15 +126,15 @@ async def nekobot(cat):
         pass   
     text = deEmojify(text)
     catfile = await trumptweet(text)
-    await cat.client.send_file(cat.chat_id , catfile , reply_to = reply_to_id ) 
+    await cat.client.send_file(cat.chat_id , catfile , reply_to = message_id_to_reply ) 
     await cat.delete()
     
 @register(pattern="^.modi(?: |$)(.*)", outgoing=True)
 async def nekobot(cat):
     text = cat.pattern_match.group(1)
-    reply_to_id = cat.message
-    if cat.reply_to_msg_id:
-        reply_to_id = await cat.get_reply_message()
+    message_id_to_reply = cat.message.reply_to_msg_id
+    if not message_id_to_reply:
+            message_id_to_reply = None
     if not text:
         if cat.is_reply:
             if not reply_to_id.media:
@@ -153,15 +153,15 @@ async def nekobot(cat):
         pass   
     text = deEmojify(text)
     catfile = await moditweet(text)
-    await cat.client.send_file(cat.chat_id , catfile , reply_to = reply_to_id ) 
+    await cat.client.send_file(cat.chat_id , catfile , reply_to = message_id_to_reply ) 
     await cat.delete() 
     
 @register(pattern="^.cmm(?: |$)(.*)", outgoing=True)
 async def nekobot(cat):
     text = cat.pattern_match.group(1)
-    reply_to_id = cat.message
-    if cat.reply_to_msg_id:
-        reply_to_id = await cat.get_reply_message()
+    message_id_to_reply = cat.message.reply_to_msg_id
+    if not message_id_to_reply:
+            message_id_to_reply = None
     if not text:
         if cat.is_reply:
             if not reply_to_id.media:
@@ -180,15 +180,15 @@ async def nekobot(cat):
         pass   
     text = deEmojify(text)
     catfile = await changemymind(text)
-    await cat.client.send_file(cat.chat_id , catfile , reply_to = reply_to_id ) 
+    await cat.client.send_file(cat.chat_id , catfile , reply_to = message_id_to_reply ) 
     await cat.delete()
     
 @register(pattern="^.kanna(?: |$)(.*)", outgoing=True)
 async def nekobot(cat):
     text = cat.pattern_match.group(1)
-    reply_to_id = cat.message
-    if cat.reply_to_msg_id:
-        reply_to_id = await cat.get_reply_message()
+    message_id_to_reply = cat.message.reply_to_msg_id
+    if not message_id_to_reply:
+            message_id_to_reply = None
     if not text:
         if cat.is_reply:
             if not reply_to_id.media:
@@ -207,12 +207,12 @@ async def nekobot(cat):
         pass   
     text = deEmojify(text)
     catfile = await kannagen(text)
-    await cat.client.send_file(cat.chat_id , catfile , reply_to = reply_to_id ) 
+    await cat.client.send_file(cat.chat_id , catfile , reply_to = message_id_to_reply ) 
     await cat.delete()
     
 CMD_HELP.update({
 "imgmeme":
-"Fun purpose 😛😛😏😏\
+"Intended for LoLz only kek\
 \n\n`.modi` (text)\
      \nUsage : Tweet with modi\
 \n\n`.trump` (text)\
