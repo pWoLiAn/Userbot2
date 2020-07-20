@@ -4,12 +4,12 @@ import json
 import random
 import re
 from telethon import events, errors, custom, functions, __version__
-from userbot import CMD_HELP
+from userbot import CMD_HELP, TG_BOT_USER_NAME_BF_HER
 import io
 import sys
 
 
-if Var.TG_BOT_USER_NAME_BF_HER is not None and tgbot is not None:
+if TG_BOT_USER_NAME_BF_HER is not None and tgbot is not None:
     @tgbot.on(events.InlineQuery)  # pylint:disable=E0602
     async def inline_handler(event):
         builder = event.builder
