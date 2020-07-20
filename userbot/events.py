@@ -143,8 +143,7 @@ def register(**args):
                             "`Userbot has crashed.\
                         \nError logs have been sent to the log chat.`"
                         )
-                        await check.sleep(5)
-                        await check.delete()
+     
 
                     await check.client.send_file(send_to,
                                                  "error.log",
