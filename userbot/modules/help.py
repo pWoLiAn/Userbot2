@@ -5,7 +5,7 @@
 #
 """ Userbot help command """
 
-from userbot import CMD_HELP
+from userbot import CMD_HELP, TG_BOT_USER_NAME_BF_HER
 from userbot.events import register
 from userbot import bot
 
@@ -13,6 +13,7 @@ from userbot import bot
 @register(outgoing=True, pattern="^.help(?: |$)(.*)")
 async def help(event):
     """ For .help command,"""
+    tgbotusername = TG_BOT_USER_NAME_BF_HER
     args = event.pattern_match.group(1).lower()
     if args:
         if args in CMD_HELP:
