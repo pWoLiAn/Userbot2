@@ -82,6 +82,10 @@ HEROKU_API_KEY = os.environ.get("HEROKU_API_KEY", None)
 GIT_REPO_NAME = os.environ.get("GIT_REPO_NAME", None)
 GITHUB_ACCESS_TOKEN = os.environ.get("GITHUB_ACCESS_TOKEN", None)
 
+# Telegram BOT Token from @BotFather
+TG_BOT_TOKEN_BF_HER = os.environ.get("TG_BOT_TOKEN_BF_HER", None)
+TG_BOT_USER_NAME_BF_HER = os.environ.get("TG_BOT_USER_NAME_BF_HER", None)
+
 # Main Repo you want to pull updates from.
 UPSTREAM_REPO_URL = os.environ.get(
     "UPSTREAM_REPO_URL",
