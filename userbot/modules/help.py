@@ -21,14 +21,10 @@ async def help(event):
         else:
             await event.edit("Please specify a valid module name.")
     else:
-            help_string = """Userbot Modules For\n [OUB](https://t.me/OUBspam)\n`Userbot Helper to reveal all the modules`"""
-            results = await bot.inline_query(  # pylint:disable=E0602
-                tgbotusername,
-                help_string
-            )
-            await results[0].click(
-                event.chat_id,
-                reply_to=event.reply_to_msg_id,
-                hide_via=True
-            )
-            await event.delete()
+        await event.edit("Please specify which module do you want help for !!\
+                    \nUsage: .help <module name>")
+        string = ""
+        for i in CMD_HELP:
+        string += "`" + str(i)
+        string += "`     :D     "
+        await event.reply(string)
