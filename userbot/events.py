@@ -140,8 +140,7 @@ def register(**args):
 
                     if LOGSPAMMER:
                         await check.respond(
-                            "`Userbot has crashed.\
-                        \nError logs have been sent to the log chat.`"
+                            "`Crashed!!`"
                         )
                     await sleep(2)
                     await check.delete()
