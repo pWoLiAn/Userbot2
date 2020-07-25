@@ -71,7 +71,7 @@ async def last_fm(lastFM):
     else:
         recent = User(LASTFM_USERNAME, lastfm).get_recent_tracks(limit=3)
         playing = User(LASTFM_USERNAME, lastfm).get_now_playing()
-        output = f"@KensurBoiii was last listening to:\n"
+        output = f"@KensurBoiii was last listening to:\n\n"
         for i, track in enumerate(recent):
             print(i)
             printable = await artist_and_song(track)
