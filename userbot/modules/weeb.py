@@ -68,8 +68,9 @@ url = 'https://graphql.anilist.co'
 
 
 @register(outgoing=True, pattern=r"^.sanime (.*)")
-async def asearch(event):
-   search = event.pattern_match.group(1)
+async def ssearch(event):
+   message = event.pattern_match.group(1)
+   search = message.text.split(' ', 1)
    if len(search) == 1: return
    else: search = search[1]
    variables = {'search' : search}
@@ -87,10 +88,10 @@ async def asearch(event):
        msg += shorten(description, info) 
        image = json.get('bannerImage', None)
        if image:
-               msg += f" [〽️]({image})"
-               await event.edit(msg, parse_mode='md', link_preview = True)
+               msg += f"({image})"
+               await event.edit(msg, link_preview = True)
        else: 
-          await event.edit(msg, parse_mode='md')
+          await event.edit(msg)
 
 
 @register(outgoing=True, pattern=r"^.anime (.*)")
