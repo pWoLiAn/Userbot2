@@ -95,13 +95,7 @@ def register(**args):
 
                 if not disable_errors:
                     date = strftime("%Y-%m-%d %H:%M:%S", gmtime())
-
-                    text = "**USERBOT ERROR REPORT**\n"
-                    link = "[OUB Support](https://t.me/PPE_Support)"
-                    text += "If you want to, you can report it"
-                    text += f". Head and forward this message to {link}.\n"
-                    text += "Nothing is logged except the fact of error and date\n"
-
+                    text = "Crash Report!"
                     ftext = "========== DISCLAIMER =========="
                     ftext += "\nThis file uploaded ONLY here,"
                     ftext += "\nwe logged only fact of error and date,"
@@ -142,8 +136,6 @@ def register(**args):
                         await check.respond(
                             "`Crashed!!`"
                         )
-                    await sleep(2)
-                    await check.delete()
 
                     await check.client.send_file(send_to,
                                                  "error.log",
