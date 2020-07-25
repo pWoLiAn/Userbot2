@@ -64,7 +64,7 @@ async def last_fm(lastFM):
         rectrack = sub("^", "https://www.youtube.com/results?search_query=",
                        rectrack)
         if image:
-            output = f"[‎]({image})@KensurBoiii is now listening to:\n• [{playing}]({rectrack})\n`{tags}`"
+            output = f"[‎]({image})@KensurBoiii is now listening to:\n• [{playing}]({rectrack})\n`{tags}`\nCheck him out [here]({username}) :D"
             preview = True
         else:
             output = f"@KensurBoiii is now listening to:\n• [{playing}]({rectrack})\n`{tags}`\nCheck him out [here]({username}) :D"
