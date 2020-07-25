@@ -70,7 +70,7 @@ url = 'https://graphql.anilist.co'
 @register(outgoing=True, pattern=r"^.sanime (.*)")
 async def ssearch(event):
    message = event.pattern_match.group(1)
-   search = message.text.split(' ', 1)
+   search = message.split(' ', 1)
    if len(search) == 1: return
    else: search = search[1]
    variables = {'search' : search}
