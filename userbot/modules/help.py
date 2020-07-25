@@ -26,5 +26,5 @@ async def help(event):
         string = ""
         for i in CMD_HELP:
          string += "`" + str(i)
-         string += "`     :D     "
+         string += "`  (╯°□°）╯︵ ┻━┻  "
         await event.reply(string)
