@@ -88,7 +88,7 @@ async def asearch(event):
        image = json.get('bannerImage', None)
        if image:
                msg += f" [〽️]({image})"
-               await event.edit(msg, parse_mode='md', link_preview = true)
+               await event.edit(msg, parse_mode='md', link_preview = True)
        else: 
           await event.edit(msg, parse_mode='md')
 
