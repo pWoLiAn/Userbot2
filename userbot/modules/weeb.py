@@ -22,9 +22,9 @@ def shorten(description, info = 'anilist.co'):
     msg = "" 
     if len(description) > 700:
            description = description[0:500] + '....'
-           msg += f"\n*Description*: __{description}__[Read More]({info})"
+           msg += f"\n**Description**: __{description}__[Read More]({info})"
     else:
-          msg += f"\n*Description*:__{description}__"
+          msg += f"\n**Description**:__{description}__"
     return (
             msg.replace("<br>", "")
             .replace("</br>", "")
@@ -89,8 +89,8 @@ async def ssearch(event):
        msg += shorten(description, info) 
        image = json.get('bannerImage', None)
        if image:
-               msg += f" \n[〽️]({image})"
-               await event.edit(msg, link_preview = True)
+               
+               await event.edit(text = msg, file = image)
        else: 
           await event.edit(msg)
 
