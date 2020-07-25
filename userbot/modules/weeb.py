@@ -64,6 +64,8 @@ anime_query = '''
     }
 '''
 
+url = 'https://graphql.anilist.co'
+
 
 @register(outgoing=True, pattern=r"^.sanime (.*)")
 async def asearch(event):
