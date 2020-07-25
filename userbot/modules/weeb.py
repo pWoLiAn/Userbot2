@@ -5,6 +5,7 @@ import json
 import aiohttp
 import asyncio
 import random
+import requests
 from jikanpy import Jikan
 from jikanpy.exceptions import APIException
 from urllib.parse import quote as urlencode
@@ -17,6 +18,77 @@ from asyncio import sleep
 _pats = []
 jikan = Jikan()
 
+def shorten(description, info = 'anilist.co'):
+    msg = "" 
+    if len(description) > 700:
+           description = description[0:500] + '....'
+           msg += f"\n*Description*: _{description}_[Read More]({info})"
+    else:
+          msg += f"\n*Description*:_{description}_"
+    return (
+            msg.replace("<br>", "")
+            .replace("</br>", "")
+            .replace("<i>", "")
+            .replace("</i>", "")
+        )
+
+anime_query = '''
+   query ($id: Int,$search: String) { 
+      Media (id: $id, type: ANIME,search: $search) { 
+        id
+        title {
+          romaji
+          english
+          native
+        }
+        description (asHtml: false)
+        startDate{
+            year
+          }
+          episodes
+          season
+          type
+          format
+          status
+          duration
+          siteUrl
+          studios{
+              nodes{
+                   name
+              }
+          }
+          averageScore
+          genres
+          bannerImage
+      }
+    }
+'''
+
+
+@register(outgoing=True, pattern=r"^.sanime (.*)")
+async def asearch(event):
+   search = event.pattern_match.group(1)
+   if len(search) == 1: return
+   else: search = search[1]
+   variables = {'search' : search}
+   json = requests.post(url, json={'query': anime_query, 'variables': variables}).json()['data'].get('Media', None)
+   if json:
+       msg = f"*{json['title']['romaji']}*(`{json['title']['native']}`)\n*Type*: {json['format']}\n*Status*: {json['status']}\n*Episodes*: {json.get('episodes', 'N/A')}\n*Duration*: {json.get('duration', 'N/A')} Per Ep.\n*Score*: {json['averageScore']}\n*Genres*: `"
+       for x in json['genres']: msg += f"{x}, "
+       msg = msg[:-2] + '`\n'
+       msg += "*Studios*: `"
+       for x in json['studios']['nodes']: msg += f"{x['name']}, " 
+       msg = msg[:-2] + '`\n'
+       info = json.get('siteUrl')
+       anime_id = json['id']
+       description = json.get('description', 'N/A').replace('<i>', '').replace('</i>', '').replace('<br>', '')
+       msg += shorten(description, info) 
+       image = json.get('bannerImage', None)
+       if image:
+               msg += f" [〽️]({image})"
+               await event.edit(msg, parse_mode='md', link_preview = true)
+       else: 
+          await event.edit(msg, parse_mode='md')
 
 
 @register(outgoing=True, pattern=r"^.anime (.*)")
