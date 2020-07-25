@@ -88,9 +88,8 @@ async def ssearch(event):
        description = json.get('description', 'N/A').replace('<i>', '').replace('</i>', '').replace('<br>', '')
        msg += shorten(description, info) 
        image = json.get('bannerImage', None)
-       image = image.replace('(','').replace(')','')
        if image:
-               msg += f" [〽️]({image})"
+               msg += f"      [〽️]({image})"
                await event.edit(msg, link_preview = True)
        else: 
           await event.edit(msg)
