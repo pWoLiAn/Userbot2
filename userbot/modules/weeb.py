@@ -22,9 +22,9 @@ def shorten(description, info = 'anilist.co'):
     msg = "" 
     if len(description) > 700:
            description = description[0:500] + '....'
-           msg += f"\n*Description*: _{description}_[Read More]({info})"
+           msg += f"\n*Description*: __{description}__[Read More]({info})"
     else:
-          msg += f"\n*Description*:_{description}_"
+          msg += f"\n*Description*:__{description}__"
     return (
             msg.replace("<br>", "")
             .replace("</br>", "")
@@ -67,19 +67,20 @@ anime_query = '''
 url = 'https://graphql.anilist.co'
 
 
-@register(outgoing=True, pattern=r"^.sanime (.*)")
+@register(outgoing=True, pattern=r"^.sanime(.*)")
 async def ssearch(event):
    message = event.pattern_match.group(1)
+   message = ' ' + message
    search = message.split(' ', 1)
    if len(search) == 1: return
    else: search = search[1]
    variables = {'search' : search}
    json = requests.post(url, json={'query': anime_query, 'variables': variables}).json()['data'].get('Media', None)
    if json:
-       msg = f"*{json['title']['romaji']}*(`{json['title']['native']}`)\n*Type*: {json['format']}\n*Status*: {json['status']}\n*Episodes*: {json.get('episodes', 'N/A')}\n*Duration*: {json.get('duration', 'N/A')} Per Ep.\n*Score*: {json['averageScore']}\n*Genres*: `"
+       msg = f"**{json['title']['romaji']}**(`{json['title']['native']}`)\n**Type**: {json['format']}\n**Status**: {json['status']}\n**Episodes**: {json.get('episodes', 'N/A')}\n**Duration**: {json.get('duration', 'N/A')} Per Ep.\n**Score**: {json['averageScore']}\n**Genres**: `"
        for x in json['genres']: msg += f"{x}, "
        msg = msg[:-2] + '`\n'
-       msg += "*Studios*: `"
+       msg += "**Studios**: `"
        for x in json['studios']['nodes']: msg += f"{x['name']}, " 
        msg = msg[:-2] + '`\n'
        info = json.get('siteUrl')
@@ -88,7 +89,7 @@ async def ssearch(event):
        msg += shorten(description, info) 
        image = json.get('bannerImage', None)
        if image:
-               msg += f"({image})"
+               msg += f" \n[〽️]({image})"
                await event.edit(msg, link_preview = True)
        else: 
           await event.edit(msg)
