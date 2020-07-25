@@ -64,10 +64,10 @@ async def last_fm(lastFM):
         rectrack = sub("^", "https://www.youtube.com/results?search_query=",
                        rectrack)
         if image:
-            output = f"[‎]({image})@KensurBoiii is now listening to:\n• [{playing}]({rectrack})\n`{tags}`\nCheck him out [here]({username}) :D"
+            output = f"[‎]({image})@KensurBoiii is now listening to:\n\n• [{playing}]({rectrack})\n`{tags}`\n\nCheck him out [here]({username}) "
             preview = True
         else:
-            output = f"@KensurBoiii is now listening to:\n• [{playing}]({rectrack})\n`{tags}`\nCheck him out [here]({username}) :D"
+            output = f"@KensurBoiii is now listening to:\n\n• [{playing}]({rectrack})\n`{tags}`\n\nCheck him out [here]({username}) "
     else:
         recent = User(LASTFM_USERNAME, lastfm).get_recent_tracks(limit=3)
         playing = User(LASTFM_USERNAME, lastfm).get_now_playing()
