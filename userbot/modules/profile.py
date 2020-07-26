@@ -75,8 +75,8 @@ async def set_profilepic(propic):
     if replymsg.media:
         if isinstance(replymsg.media, MessageMediaPhoto):
             photo = await propic.client.download_media(message=replymsg.photo)
-        elif "image" in replymsg.split('/'):
-            photo = await propic.client.download_file(replymsg.media.document)
+        elif "image" in replymsg.document.mime_type.split('/'):
+            photo = await propic.client.download_file(replymsg.document)
         else:
             await propic.edit(INVALID_MEDIA)
 
