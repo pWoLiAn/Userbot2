@@ -4,6 +4,8 @@ import os
 import json
 import aiohttp
 import asyncio
+import math
+import time
 import random
 import requests
 from jikanpy import Jikan
@@ -31,6 +33,43 @@ def shorten(description, info = 'anilist.co'):
             .replace("<i>", "")
             .replace("</i>", "")
         )
+
+
+#time formatter from uniborg
+def t(milliseconds: int) -> str:
+    """Inputs time in milliseconds, to get beautified time,
+    as string"""
+    seconds, milliseconds = divmod(int(milliseconds), 1000)
+    minutes, seconds = divmod(seconds, 60)
+    hours, minutes = divmod(minutes, 60)
+    days, hours = divmod(hours, 24)
+    tmp = ((str(days) + " Days, ") if days else "") + \
+        ((str(hours) + " Hours, ") if hours else "") + \
+        ((str(minutes) + " Minutes, ") if minutes else "") + \
+        ((str(seconds) + " Seconds, ") if seconds else "") + \
+        ((str(milliseconds) + " ms, ") if milliseconds else "")
+    return tmp[:-2]
+
+
+airing_query = '''
+    query ($id: Int,$search: String) { 
+      Media (id: $id, type: ANIME,search: $search) { 
+        id
+        episodes
+        title {
+          romaji
+          english
+          native
+        }
+        nextAiringEpisode {
+           airingAt
+           timeUntilAiring
+           episode
+        } 
+      }
+    }
+    '''
+
 
 anime_query = '''
    query ($id: Int,$search: String) { 
@@ -67,7 +106,27 @@ anime_query = '''
 url = 'https://graphql.anilist.co'
 
 
-@register(outgoing=True, pattern=r"^.sanime(.*)")
+@register(outgoing=True, pattern=r"^.airing(.*)")
+async def airing(event):
+  message = event.pattern_match.group(1)
+  message = ' ' + message
+  search_str = message.split(' ', 1)
+  if len(search_str) == 1:
+      await event.edit('Tell Anime Name :) ( /airing <anime name>)')
+      return
+  variables = {'search' : search_str[1]}
+  response = requests.post(url, json={'query': airing_query, 'variables': variables}).json()['data']['Media']
+  msg = f"**Name**: **{response['title']['romaji']}**(`{response['title']['native']}`)\n**ID**: `{response['id']}`"
+  if response['nextAiringEpisode']:
+    time = response['nextAiringEpisode']['timeUntilAiring'] * 1000
+    time = t(time)
+    msg += f"\n**Episode**: `{response['nextAiringEpisode']['episode']}`\n**Airing In**: `{time}`"
+  else:
+    msg += f"\n**Episode**:{response['episodes']}\n**Status**: `N/A`"
+  await event.edit(msg)
+
+
+@register(outgoing=True, pattern=r"^.anime(.*)")
 async def ssearch(event):
    message = event.pattern_match.group(1)
    message = ' ' + message
@@ -95,7 +154,7 @@ async def ssearch(event):
           await event.edit(msg)
 
 
-@register(outgoing=True, pattern=r"^.anime (.*)")
+@register(outgoing=True, pattern=r"^.sanime (.*)")
 async def asearch(event):
     msg = event.pattern_match.group(1)
     res = ""
@@ -216,6 +275,8 @@ CMD_HELP.update({
     "\nUsage: Get random pat gif.\n"
     "`.cum`"
     "\nUsage: Get random cum gif.\n"
-    "`.sanime`"
-    "\nUsage: Get details about given anime."
+    "`.anime`"
+    "\nUsage: Get details about given anime.\n"
+    "`.airing`"
+    "\nUsage: Get airing details about given currently airing anime."
 })
