@@ -21,7 +21,7 @@ async def _(hentai):
     if not link:
         return await hentai.edit("`I can't search nothing`")
      
-    botid = await hentai.client.get_entity(chat).id
+    botid = await hentai.client.get_entity(chat)
     await hentai.edit("```Processing```")
     async with bot.conversation(chat) as conv:
           try:     
