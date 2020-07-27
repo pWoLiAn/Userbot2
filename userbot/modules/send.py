@@ -6,23 +6,26 @@
  
 import datetime
 from telethon import events
+from telethon import utils
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon.tl.functions.account import UpdateNotifySettingsRequest
 from userbot import bot, CMD_HELP
 from userbot.events import register
  
-@register(outgoing=True, pattern="^.nhentai(?: |$)(.*)")
+@register(outgoing=True, pattern="^.send (.*)")
 async def _(hentai):
     if hentai.fwd_from:
         return
-    link = hentai.pattern_match.group(1)
+    chat = str(hentai.pattern_match.group(1).split(' ', 1)[0])
+    link = str(hentai.pattern_match.group(1).split(' ', 1)[1])
     if not link:
         return await hentai.edit("`I can't search nothing`")
-    chat = "@nHentaiBot"
+     
+    botid = await hentai.client.get_entity(chat).id
     await hentai.edit("```Processing```")
     async with bot.conversation(chat) as conv:
           try:     
-              response = conv.wait_event(events.NewMessage(incoming=True,from_users=424466890))
+              response = conv.wait_event(events.NewMessage(incoming=True,from_users=botid))
               msg = await bot.send_message(chat, link)
               response = await response
               """ - don't spam notif - """
@@ -41,6 +44,6 @@ async def _(hentai):
                                                 [msg.id, response.id])
  
 CMD_HELP.update({
-"nhentai": 
-"`.nhentai` <link / code>"
+"sendbot": 
+"`.send` <link / code>"
 "\nUsage: view nhentai in telegra.ph"})
