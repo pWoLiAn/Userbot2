@@ -1,8 +1,4 @@
-# Copyright (C) 2020 KeselekPermen69
-#
-# Licensed under the Raphielscape Public License, Version 1.d (the "License");
-# you may not use this file except in compliance with the License.
-#
+#ME
  
 import datetime
 from telethon import events
@@ -45,5 +41,5 @@ async def _(hentai):
  
 CMD_HELP.update({
 "sendbot": 
-"`.send` <link / code>"
-"\nUsage: view nhentai in telegra.ph"})
+"`.send` <@bot_username> <cmd. to send>"
+"\nUsage: Send cmd to bot and forwards the output"})
