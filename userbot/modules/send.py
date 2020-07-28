@@ -32,8 +32,8 @@ async def _(hentai):
           if response.text.startswith("**Sorry I couldn't get manga from**"):
              await hentai.edit("```I think this is not the right link```")
           else:
-             await hentai.edit(f"Message sent : {link}"
-                               f"\nSent to : {chat}")
+             await hentai.edit(f"`Message sent` : {link}"
+                               f"\n`Sent to` : {chat}")
              await bot.send_message(hentai.chat_id, response.message)
              await bot.send_read_acknowledge(hentai.chat_id)
              """ - cleanup chat after completed - """
