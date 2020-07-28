@@ -27,17 +27,15 @@ async def _(hentai):
               """ - don't spam notif - """
               await bot.send_read_acknowledge(conv.chat_id)
           except YouBlockedUserError: 
-              await hentai.reply("```Please unblock @nHentaiBot and try again```")
+              await hentai.reply("`Please unblock {chat} and try again`")
               return
-          if response.text.startswith("**Sorry I couldn't get manga from**"):
-             await hentai.edit("```I think this is not the right link```")
-          else:
-             await hentai.edit(f"`Message sent` : {link}"
+         
+          await hentai.edit(f"`Message sent` : {link}"
                                f"\n`Sent to` : {chat}")
-             await bot.send_message(hentai.chat_id, response.message)
-             await bot.send_read_acknowledge(hentai.chat_id)
-             """ - cleanup chat after completed - """
-             await hentai.client.delete_messages(conv.chat_id,
+          await bot.send_message(hentai.chat_id, response.message)
+          await bot.send_read_acknowledge(hentai.chat_id)
+          """ - cleanup chat after completed - """
+          await hentai.client.delete_messages(conv.chat_id,
                                                 [msg.id, response.id])
     
 CMD_HELP.update({
