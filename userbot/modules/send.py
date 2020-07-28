@@ -1,4 +1,4 @@
-#ME
+#BY ME huuhuuhu
  
 import datetime
 from telethon import events
@@ -32,13 +32,14 @@ async def _(hentai):
           if response.text.startswith("**Sorry I couldn't get manga from**"):
              await hentai.edit("```I think this is not the right link```")
           else:
-             await hentai.delete()
+             await hentai.edit(f"Message sent : {link}"
+                               f"\nSent to : {chat}")
              await bot.send_message(hentai.chat_id, response.message)
              await bot.send_read_acknowledge(hentai.chat_id)
              """ - cleanup chat after completed - """
              await hentai.client.delete_messages(conv.chat_id,
                                                 [msg.id, response.id])
- 
+    
 CMD_HELP.update({
 "sendbot": 
 "`.send` <@bot_username> <cmd. to send>"
