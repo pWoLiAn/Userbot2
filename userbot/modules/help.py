@@ -24,7 +24,7 @@ async def help(event):
         await event.edit("Please specify which module do you want help for !!\
                     \nUsage: .help <module name>")
         string = ""
-        for i in CMD_HELP:
+        for i in sorted(CMD_HELP):
          string += "`" + str(i)
          string += "`  (╯°□°）╯︵ ┻━┻  "
         await event.reply(string)
