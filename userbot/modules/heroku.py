@@ -13,6 +13,8 @@ import heroku3
 import aiohttp
 import math
 import requests
+import os
+import codecs
 
 from userbot import (CMD_HELP, HEROKU_APP_NAME, HEROKU_API_KEY, BOTLOG, BOTLOG_CHATID)
 from userbot.events import register
