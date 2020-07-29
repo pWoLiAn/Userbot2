@@ -5,7 +5,7 @@
 #
 """ Userbot help command """
 
-from userbot import CMD_HELP, TG_BOT_USER_NAME_BF_HER
+from userbot import CMD_HELP
 from userbot.events import register
 from userbot import bot
 
