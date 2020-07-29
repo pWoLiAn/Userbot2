@@ -80,4 +80,6 @@ justwatch
 deezloader
 zipfile38
 nekos.py
+html_telegraph_poster
 jikanpy
+pendulum==2.0.5
