@@ -243,6 +243,77 @@ CMD_HELP = {}
 CMD_LIST = {}
 ISAFK = False
 AFKREASON = None
+INT_PLUG = ""
+LOAD_PLUG = {}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 def paginate_help(page_number, loaded_modules, prefix):
     number_of_rows = 5
@@ -289,9 +360,9 @@ with bot:
         @tgbot.on(events.NewMessage(pattern="/start"))
         async def handler(event):
             if event.message.from_id != uid:
-                await event.reply("I'm [oub-remix](https://github.com/sahyam2019/oub-remix) modules helper...\nplease make your own bot, don't use mine 😋")
+                await event.reply("`Dafuq r u??`")
             else:
-                await event.reply(f"`Hey there {ALIVE_NAME}\n\nI work for you :)`")
+                await event.reply(f"`Hey there {ALIVE_NAME}\n\nMe at Senpai's service UwU`")
 
         @tgbot.on(events.InlineQuery)  # pylint:disable=E0602
         async def inline_handler(event):
@@ -303,7 +374,7 @@ with bot:
                 result = builder.article(
                     "Please Use Only With .help Command",
                     text="{}\nTotal loaded modules: {}".format(
-                        "UserButt modules helper.\n",
+                        "theawkbot modules helper.\n",
                         len(dugmeler),
                     ),
                     buttons=buttons,
@@ -311,22 +382,22 @@ with bot:
                 )
             elif query.startswith("tb_btn"):
                 result = builder.article(
-                    "UserButt Helper",
+                    "theawkbot Helper",
                     text="List of Modules",
                     buttons=[],
                     link_preview=True)
             else:
                 result = builder.article(
-                    "UserButt",
+                    "theawkbot",
                     text="""You can convert your account to bot and use them. Remember, you can't manage someone else's bot! All installation details are explained from GitHub address below.""",
                     buttons=[
                         [
                             custom.Button.url(
                                 "GitHub Repo",
-                                "https://github.com/KeselekPermen69/userbutt"),
+                                "https://github.com/Devp73/Userbot1"),
                             custom.Button.url(
                                 "Support",
-                                "https://t.me/UserBotIndo")],
+                                "https://t.me/PPE_Support")],
                     ],
                     link_preview=False,
                 )
