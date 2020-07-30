@@ -224,6 +224,7 @@ async def terminal_runner(term):
 
     process = await asyncio.create_subprocess_shell(
         command,
+        "--stdout",
         stdout=asyncio.subprocess.PIPE,
         stderr=asyncio.subprocess.PIPE)
     stdout, stderr = await process.communicate()
