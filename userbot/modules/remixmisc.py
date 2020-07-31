@@ -774,6 +774,8 @@ CMD_HELP.update({
     "remixmisc":
     "`.app`\
 \nUsage: type .app name and get app details.\
+\n\n`.ls`\
+\nUsage: terminal ls but cooler.\
 \n\n`.undlt`\
 \nUsage: undo deleted message but u need admin permission.\
 \n\n`.remove`\
