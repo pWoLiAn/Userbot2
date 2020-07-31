@@ -27,7 +27,7 @@ async def _(hentai):
               """ - don't spam notif - """
               await bot.send_read_acknowledge(conv.chat_id)
           except YouBlockedUserError: 
-              await hentai.reply(f"`Please unblock {chat} and try again`")
+              await hentai.reply(f"`Please unblock` {chat} `and try again`")
               return
          
           await hentai.edit(f"`Message sent` : {link}"
