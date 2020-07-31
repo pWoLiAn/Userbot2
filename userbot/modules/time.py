@@ -60,12 +60,12 @@ async def time_func(tdata):
         except KeyError:
             c_name = con
         timezones = await get_tz(con)
-    elif COUNTRY:
+    elif COUNTRY==con:
         c_name = COUNTRY
         tz_num = TZ_NUMBER
         timezones = await get_tz(COUNTRY)
     else:
-        await tdata.edit(f"`It's`  **{dt.now().strftime(t_form)}**  `here.`")
+        await tdata.edit(f"`It's`  **{dt.now().strftime(t_form)}**  `here(serber time).`")
         return
 
     if not timezones:
