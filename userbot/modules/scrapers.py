@@ -554,7 +554,7 @@ async def lang(value):
 @register(outgoing=True, pattern="^.yt (.*)")
 async def yt_search(video_q):
     """ For .yt command, do a YouTube search from Telegram. """
-    count = int(video_q.pattern_match.group(1).split(' ',1)[0])
+    c = int(video_q.pattern_match.group(1).split(' ',1)[0])
     query = video_q.pattern_match.group(1).split(' ',1)[1]
     result = ''
 
@@ -566,7 +566,7 @@ async def yt_search(video_q):
 
     await video_q.edit("```Processing...```")
 
-    full_response = await youtube_search(query)
+    full_response = await youtube_search(query,c)
     videos_json = full_response[1]
 
     for video in videos_json:
@@ -580,6 +580,7 @@ async def yt_search(video_q):
 
 
 async def youtube_search(query,
+                         count,
                          order="relevance",
                          token=None,
                          location=None,
