@@ -60,7 +60,7 @@ async def time_func(tdata):
         except KeyError:
             c_name = con
         timezones = await get_tz(con)
-    elif COUNTRY==con:
+    elif COUNTRY:
         c_name = COUNTRY
         tz_num = TZ_NUMBER
         timezones = await get_tz(COUNTRY)
