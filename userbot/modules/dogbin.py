@@ -112,7 +112,7 @@ async def get_dogbin_content(dog_url):
             str(RedirectsErr))
         return
 
-    reply_text = "`Fetched dogbin URL content successfully!`\n\n`Content:` " + resp.text
+    reply_text = "`Fetched dogbin URL content successfully!`\n\n`Content:` `" + resp.text + "`"
 
     await dog_url.edit(reply_text)
     if BOTLOG:
