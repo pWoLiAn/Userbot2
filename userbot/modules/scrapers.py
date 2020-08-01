@@ -100,7 +100,7 @@ async def ocr_space_file(filename,
         )
     return r.json()
 
-DOGBIN_URL = "https://del.dog/"    
+DOGBIN_URL = "https://del.dog/"
 
 @register(outgoing=True, pattern="^.crblang (.*)")
 async def setlang(prog):
@@ -172,8 +172,8 @@ async def carbon_api(e):
     driver.quit()
     # Removing carbon.png after uploading
     await e.delete()  # Deleting msg
-    
-    
+
+
 @register(outgoing=True, pattern="^.img (.*)")
 async def img_sampler(event):
     """ For .img command, search and return images matching the query. """
@@ -401,7 +401,7 @@ async def _(event):
         await event.edit("Text: **{}**\n\nMeaning: **{}**\n\nExample: __{}__".format(mean.word, mean.definition, mean.example))
     except asyncurban.WordNotFoundError:
         await event.edit("No result found for **" + word + "**")
-       
+
 @register(outgoing=True, pattern=r"^.tts(?: |$)([\s\S]*)")
 async def text_to_speech(query):
     """ For .tts command, a wrapper for Google Text-to-Speech. """
@@ -447,7 +447,7 @@ async def text_to_speech(query):
         if BOTLOG:
             await query.client.send_message(
                 BOTLOG_CHATID, "Text to Speech executed successfully !")
-        await query.delete()              
+        await query.delete()
 
 
 @register(outgoing=True, pattern=r"^.trt(?: |$)([\s\S]*)")
@@ -751,7 +751,7 @@ def deEmojify(inputString):
 CMD_HELP.update({
     'img':
     '.img <count> <search_query>\
-        \nUsage: Does an image search on Google and shows 5 images.'
+        \nUsage: Does an image search on Google.'
 })
 CMD_HELP.update({
     'currency':
