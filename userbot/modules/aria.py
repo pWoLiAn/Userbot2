@@ -62,13 +62,15 @@ async def magnet_download(event):
         LOGS.info(str(e))
         return await event.edit("Error:\n`" + str(e) + "`")
     gid = download.gid
-    try:
-        await check_progress_for_dl(gid=gid, event=event, previous=None)
-    except:
-        return await event.edit("`Invalid gid`")    
+    await check_progress_for_dl(gid=gid, event=event, previous=None)
     await sleep(5)
     new_gid = await check_metadata(gid)
-    await check_progress_for_dl(gid=new_gid, event=event, previous=None)
+    try:
+        await check_progress_for_dl(gid=new_gid, event=event, previous=None)
+    except:
+        await event.edit("`magnet uri removed from queue`")
+        await sleep(2.5)
+        return await event.delete()
 
 
 @register(outgoing=True, pattern="^.ator(?: |$)(.*)")
