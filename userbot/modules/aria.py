@@ -179,9 +179,11 @@ async def check_metadata(gid):
 
 
 async def check_progress_for_dl(gid, event, previous):
-    complete = None
-    while not complete:
-        file = aria2.get_download(gid)
+
+        try:
+            file = aria2.get_download(gid)
+        except:
+            quit()
         complete = file.is_complete
         try:
             if not complete and not file.error_message:
@@ -203,13 +205,12 @@ async def check_progress_for_dl(gid, event, previous):
                 if msg != previous:
                     await event.edit(msg)
                     msg = previous
-            else:
-                await event.edit(f"`{msg}`")
+
+
             await sleep(5)
-            await check_progress_for_dl(gid, event, previous)
-            file = aria2.get_download(gid)
             complete = file.is_complete
-            if complete:
+            if not complete : await check_progress_for_dl(gid, event, previous)
+            else:
                 return await event.edit(
                     f"`Name`: `{file.name}`\n"
                     f"`Size`: `{file.total_length_string()}`\n"
