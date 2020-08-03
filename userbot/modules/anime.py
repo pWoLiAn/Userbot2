@@ -204,7 +204,7 @@ async def anime(event):
     elif reply:
         query = reply.text
     else:
-        await event.edit("`Bruh.. What I am supposed to search ?`")
+        await event.edit("`Bruh.. What am I supposed to search ?`")
         await asyncio.sleep(6)
         await event.delete()
         return
@@ -328,17 +328,17 @@ async def site_search(event):
     elif message:
         search_query = message.text
     else:
-        await event.edit("`Uuf Bro.. Gib something to Search`")
+        await event.edit("`Gib something to Search LoL`")
         return
 
     if site == "kaizoku":
         search_url = f"https://animekaizoku.com/?s={search_query}"
         html_text = requests.get(search_url).text
         soup = bs4.BeautifulSoup(html_text, "html.parser")
-        search_result = soup.find_all("h2", {"class": "post-title"})
+        search_result = soup.find_all("h2", {"class": "title"})
 
         if search_result:
-            result = f"<a href='{search_url}'>Click Here For More Results</a> <b>of</b> <code>{html.escape(search_query)}</code> <b>on</b> <code>AnimeKaizoku</code>: \n\n"
+            result = f"<a href='{search_url}'>Click Here For More Results</a><b> of </b><code>{html.escape(search_query)}</code><b> on </b><code>AnimeKaizoku</code>: \n\n"
             for entry in search_result:
                 post_link = entry.a["href"]
                 post_name = html.escape(entry.text.strip())
