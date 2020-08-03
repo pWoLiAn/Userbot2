@@ -204,7 +204,7 @@ async def anime(event):
     elif reply:
         query = reply.text
     else:
-        await event.edit("`Bruh.. What am I supposed to search ?`")
+        await event.edit("`Bruh.. What I am supposed to search ?`")
         await asyncio.sleep(6)
         await event.delete()
         return
@@ -321,46 +321,44 @@ async def manga(event):
 @register(outgoing=True, pattern=r"^\.a(kaizoku|kayo) ?(.*)")
 async def site_search(event):
     message = await event.get_reply_message()
-    query = event.pattern_match.group(2)
+    search_query = event.pattern_match.group(2)
     site = event.pattern_match.group(1)
-    if query:
+    if search_query:
         pass
     elif message:
-        query = message.text
+        search_query = message.text
     else:
-        await event.edit("`Gib something to Search LoL`")
+        await event.edit("`Uuf Bro.. Gib something to Search`")
         return
-
-    search_query=query.strip().replace(' ','%20')
 
     if site == "kaizoku":
         search_url = f"https://animekaizoku.com/?s={search_query}"
         html_text = requests.get(search_url).text
         soup = bs4.BeautifulSoup(html_text, "html.parser")
-        search_result = soup.find_all("h2", {"class": "title"})
+        search_result = soup.find_all("h2", {"class": "post-title"})
 
         if search_result:
-            result = f"<a href='{search_url}'>Click Here For More Results</a><b> of </b><code>{query}</code><b> on </b><code>AnimeKaizoku</code>: \n\n"
+            result = f"<a href='{search_url}'>Click Here For More Results</a> <b>of</b> <code>{html.escape(search_query)}</code> <b>on</b> <code>AnimeKaizoku</code>: \n\n"
             for entry in search_result:
                 post_link = entry.a["href"]
                 post_name = html.escape(entry.text.strip())
                 result += f"• <a href='{post_link}'>{post_name}</a>\n"
                 await event.edit(result, parse_mode="HTML")
         else:
-            result = f"<b>No result found for</b> <code>{query}</code> <b>on</b> <code>AnimeKaizoku</code>"
+            result = f"<b>No result found for</b> <code>{html.escape(search_query)}</code> <b>on</b> <code>AnimeKaizoku</code>"
             await event.edit(result, parse_mode="HTML")
 
     elif site == "kayo":
         search_url = f"https://animekayo.com/?s={search_query}"
         html_text = requests.get(search_url).text
         soup = bs4.BeautifulSoup(html_text, "html.parser")
-        search_result = soup.find_all("h2", {"class": "post-title"})
+        search_result = soup.find_all("h2", {"class": "title"})
 
-        result = f"<a href='{search_url}'>Click Here For More Results</a> <b>of</b> <code>{query}</code> <b>on</b> <code>AnimeKayo</code>: \n\n"
+        result = f"<a href='{search_url}'>Click Here For More Results</a> <b>of</b> <code>{html.escape(search_query)}</code> <b>on</b> <code>AnimeKayo</code>: \n\n"
         for entry in search_result:
 
             if entry.text.strip() == "Nothing Found":
-                result = f"<b>No result found for</b> <code>{query}</code> <b>on</b> <code>AnimeKayo</code>"
+                result = f"<b>No result found for</b> <code>{html.escape(search_query)}</code> <b>on</b> <code>AnimeKayo</code>"
                 break
 
             post_link = entry.a["href"]
