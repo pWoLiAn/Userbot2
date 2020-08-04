@@ -326,7 +326,7 @@ async def site_search(event):
     if search_query:
         pass
     elif message:
-        search_query = message.text
+        search_query = message.text.strip()
     else:
         await event.edit("`Uuf Bro.. Gib something to Search`")
         return
@@ -338,7 +338,7 @@ async def site_search(event):
         search_result = soup.find_all("h2", {"class": "post-title"})
 
         if search_result:
-            result = f"<b><a href='{search_url}'>Search results</a> for</b> <code>{html.escape(search_query)}</code> <b>on</b> <code>AnimeKaizoku</code>: \n"
+            result = f"<b><a href='{search_url.replace(' ','%20')}'>Search results</a> for</b> <code>{html.escape(search_query)}</code> <b>on</b> <code>AnimeKaizoku</code>: \n"
             for entry in search_result:
                 post_link = entry.a["href"]
                 post_name = html.escape(entry.text.strip())
@@ -355,7 +355,7 @@ async def site_search(event):
         search_result = soup.find_all("h2", {"class": "title"})
 
         if search_result:
-            result = f"<b><a href='{search_url}'>Search results</a> for</b> <code>{html.escape(search_query)}</code> <b>on</b> <code>AnimeKayo</code>: \n"
+            result = f"<b><a href='{search_url.replace(' ','%20')}'>Search results</a> for</b> <code>{html.escape(search_query)}</code> <b>on</b> <code>AnimeKayo</code>: \n"
         for entry in search_result:
 
             if entry.text.strip() == "Nothing Found":
