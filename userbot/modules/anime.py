@@ -355,7 +355,7 @@ async def site_search(event):
         search_result = soup.find_all("h2", {"class": "title"})
 
         if search_result:
-        result = f"<b>Search results for</b> <code>{html.escape(search_query)}</code> <b>on</b> <code>AnimeKayo</code>: \n"
+            result = f"<b>Search results for</b> <code>{html.escape(search_query)}</code> <b>on</b> <code>AnimeKayo</code>: \n"
         for entry in search_result:
 
             if entry.text.strip() == "Nothing Found":
