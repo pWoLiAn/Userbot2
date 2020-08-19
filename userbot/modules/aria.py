@@ -51,6 +51,8 @@ aria2 = aria2p.API(aria2p.Client(host="http://localhost", port=8210,
 
 aria2.set_global_options({'dir': download_path})
 
+TEMP_DOWNLOAD_DIRECTORY+='/'
+
 
 @register(outgoing=True, pattern="^.amag(?: |$)(.*)")
 async def magnet_download(event):
