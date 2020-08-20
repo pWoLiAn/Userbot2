@@ -24,9 +24,8 @@ async def _(hentai):
     await hentai.edit("```Pouring some sauce on it...```")
     async with bot.conversation(chat) as conv:
           try:
-              response = conv.wait_event(events.NewMessage(incoming=True,from_users=648099067))
+              response = conv.wait_event(events.MessageEdited(incoming=True,from_users=648099067))
               msg = await bot.send_file(chat, link.media)
-              await sleep(1)
               response = await response
               """ - don't spam notif - """
               await bot.send_read_acknowledge(conv.chat_id)
