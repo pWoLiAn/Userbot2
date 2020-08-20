@@ -26,7 +26,6 @@ async def _(hentai):
           try:
               response = conv.wait_event(events.NewMessage(incoming=True,from_users=648099067))
               msg = await bot.send_file(chat, link.media)
-              await sleep(3)
               response = await response
               """ - don't spam notif - """
               await bot.send_read_acknowledge(conv.chat_id)
