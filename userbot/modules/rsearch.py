@@ -24,16 +24,21 @@ async def _(hentai):
     await hentai.edit("```Pouring some sauce on it...```")
     async with bot.conversation(chat) as conv:
           try:
+              response1 = conv.wait_event(events.NewMessage(incoming=True,from_users=648099067))
               response = conv.wait_event(events.MessageEdited(incoming=True,from_users=648099067))
               msg = await bot.send_file(chat, link.media)
+              response1 = await response1
               response = await response
               """ - don't spam notif - """
               await bot.send_read_acknowledge(conv.chat_id)
           except YouBlockedUserError:
               await hentai.reply("```Please unblock @reverseSearchBot and try again```")
               return
-          if response.text.startswith("aaaaah"):
-             await hentai.edit("```Too much load.slow down.```")
+          except TimeoutError:
+              await hentai.reply("```I said SLOW DOWN >:(```")
+          if response1.text.startswith("aaaaah"):
+             await hentai.edit("```slow down senpai```")
+             return
           else:
              await hentai.delete()
              await bot.send_message(hentai.chat_id, response.message)
