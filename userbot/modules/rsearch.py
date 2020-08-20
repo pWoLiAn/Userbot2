@@ -36,6 +36,7 @@ async def _(hentai):
               return
           except TimeoutError:
               await hentai.reply("```I said SLOW DOWN >:(```")
+              return
           if response1.text.startswith("aaaaah"):
              await hentai.edit("```slow down senpai```")
              return
