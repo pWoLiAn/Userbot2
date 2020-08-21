@@ -22,7 +22,7 @@ from telethon.tl.types import MessageEntityMentionName
 
 from cowpy import cow
 
-from userbot import CMD_HELP, LOGS
+from userbot import CMD_HELP, LOGS, BOTLOG
 from userbot.events import register
 
 # ================= CONSTANT =================
