@@ -17,7 +17,7 @@ async def who(event):
     if not replied_user:
         await event.edit("I share no common chats with the void.")
         return
-    common_list = get_user_com_chats(replied_user)
+    common_list = get_user_com_chats(replied_user.user.id)
     if not common_list:
         await event.edit("No common chats with this user!")
         return
