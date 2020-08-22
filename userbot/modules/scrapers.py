@@ -405,7 +405,7 @@ async def _(event):
 @register(outgoing=True, pattern=r"^.tts(?: |$)([\s\S]*)")
 async def text_to_speech(query):
     """ For .tts command, a wrapper for Google Text-to-Speech. """
-    tem=TTS_LANG
+    
     textx = await query.get_reply_message()
     message = query.pattern_match.group(1)
     if message:
@@ -448,7 +448,7 @@ async def text_to_speech(query):
     with open("k.mp3", "r"):
         await query.client.send_file(query.chat_id, "k.mp3", reply_to=message_id_to_reply, voice_note=True)
         os.remove("k.mp3")
-        TTS_LANG=tem
+        
         if BOTLOG:
             await query.client.send_message(
                 BOTLOG_CHATID, "Text to Speech executed successfully !")
