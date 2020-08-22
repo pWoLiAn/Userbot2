@@ -318,7 +318,7 @@ async def imdb(e):
 
 
 
-@register(outgoing=True, pattern=r"^.google(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^.gs(?: |$)(.*)")
 async def gsearch(q_event):
     """ For .google command, do a Google search. """
     textx = await q_event.get_reply_message()
@@ -405,6 +405,7 @@ async def _(event):
 @register(outgoing=True, pattern=r"^.tts(?: |$)([\s\S]*)")
 async def text_to_speech(query):
     """ For .tts command, a wrapper for Google Text-to-Speech. """
+    tem=TTS_LANG
     textx = await query.get_reply_message()
     message = query.pattern_match.group(1)
     if message:
@@ -420,6 +421,9 @@ async def text_to_speech(query):
         message_id_to_reply = query.message.reply_to_msg_id
         if not message_id_to_reply:
             message_id_to_reply = None
+        if "|" in message:
+            lan, message = message.split("|")
+            TTS_LANG=lan
         gTTS(message, lang=TTS_LANG)
     except AssertionError:
         await query.edit(
@@ -444,6 +448,7 @@ async def text_to_speech(query):
     with open("k.mp3", "r"):
         await query.client.send_file(query.chat_id, "k.mp3", reply_to=message_id_to_reply, voice_note=True)
         os.remove("k.mp3")
+        TTS_LANG=tem
         if BOTLOG:
             await query.client.send_message(
                 BOTLOG_CHATID, "Text to Speech executed successfully !")
@@ -463,7 +468,6 @@ async def translateme(trans):
     else:
         await trans.edit("`Give a text or reply to a message to translate!`")
         return
-
     try:
         reply_text = translator.translate(deEmojify(message), dest=TRT_LANG)
     except ValueError:
@@ -545,6 +549,8 @@ async def lang(value):
                 f"`Invalid Language code !!`\n`Available language codes for TTS`:\n\n`{tts_langs()}`"
             )
             return
+    await value.edit('Default lang changed successfully!')
+    await sleep(2)
     await value.delete()
     if BOTLOG:
         await value.client.send_message(
@@ -764,7 +770,7 @@ CMD_HELP.update({
         \nUsage: Beautify your code using carbon.now.sh\nUse .crblang <text> to set language for your code.'
 })
 CMD_HELP.update(
-    {'google': '.google <count> <query>\
+    {'google': '.gs <count> <query>\
         \nUsage: Does a search on Google.'})
 CMD_HELP.update(
     {'wiki': '.wiki <query>\
