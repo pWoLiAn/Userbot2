@@ -423,8 +423,8 @@ async def text_to_speech(query):
             message_id_to_reply = None
         if "|" in message:
             lan, message = message.split("|")
-            TTS_LANG=lan
-        gTTS(message, lang=TTS_LANG)
+            gTTS(message, lang=lan)
+        else: gTTS(message, lang=TTS_LANG)
     except AssertionError:
         await query.edit(
             'The text is empty.\n'
@@ -437,7 +437,8 @@ async def text_to_speech(query):
     except RuntimeError:
         await query.edit('Error loading the languages dictionary.')
         return
-    tts = gTTS(message, lang=TTS_LANG)
+    if lan: tts = gTTS(message, lang=lan)
+    else: tts = gTTS(message, lang=TTS_LANG)
     tts.save("k.mp3")
     with open("k.mp3", "rb") as audio:
         linelist = list(audio)
