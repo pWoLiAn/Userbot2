@@ -419,7 +419,7 @@ async def _(event):
         return
     text = emoji.demojize(text.strip())
     lan = lan.strip()
-    gTTS(text, lang=lan)
+    try: gTTS(text, lang=lan)
     except AssertionError:
         await event.edit(
             'The text is empty.\n'
