@@ -66,8 +66,6 @@ import asyncurban
 
 
 CARBONLANG = "auto"
-TTS_LANG = "en"
-TRT_LANG = "en"
 TEMP_DOWNLOAD_DIRECTORY = "/root/userbot/.bin"
 
 async def ocr_space_file(filename,
@@ -402,89 +400,55 @@ async def _(event):
     except asyncurban.WordNotFoundError:
         await event.edit("No result found for **" + word + "**")
 
-@register(outgoing=True, pattern=r"^.tts(?: |$)([\s\S]*)")
-async def text_to_speech(query):
-    """ For .tts command, a wrapper for Google Text-to-Speech. """
-    lan = None
-    textx = await query.get_reply_message()
-    message = query.pattern_match.group(1)
-    if message:
-        pass
-    elif textx:
-        message = textx.text
-    else:
-        await query.edit(
-            "`Give a text or reply to a message for Text-to-Speech!`")
+@register(outgoing=True, pattern=r"^.tts(?: |$)(.*)")
+async def _(event):
+    if event.fwd_from:
         return
-
-    try:
-        message_id_to_reply = query.message.reply_to_msg_id
-        if not message_id_to_reply:
-            message_id_to_reply = None
-        if "|" in message:
-            lan, message = message.split("|")
-            gTTS(message, lang=lan)
-        else: gTTS(message, lang=TTS_LANG)
+    if "trim" in event.raw_text:
+        # https://t.me/c/1220993104/192075
+        return
+    input_str = event.pattern_match.group(1)
+    if event.reply_to_msg_id:
+        previous_message = await event.get_reply_message()
+        text = previous_message.message
+        lan = input_str or "en"
+    elif "/" in input_str:
+        lan, text = input_str.split("/")
+    else:
+        await event.edit("`.tts LanguageCode` as reply to a message")
+        return
+    text = emoji.demojize(text.strip())
+    lan = lan.strip()
+    gTTS(text, lang=lan)
     except AssertionError:
-        await query.edit(
+        await event.edit(
             'The text is empty.\n'
             'Nothing left to speak after pre-precessing, tokenizing and cleaning.'
         )
         return
     except ValueError:
-        await query.edit('Language is not supported.')
+        await event.edit('Language is not supported.')
         return
     except RuntimeError:
-        await query.edit('Error loading the languages dictionary.')
+        await event.edit('Error loading the languages dictionary.')
         return
-    if lan: tts = gTTS(message, lang=lan)
-    else: tts = gTTS(message, lang=TTS_LANG)
+    tts = gTTS(text, lang=lan)
     tts.save("k.mp3")
     with open("k.mp3", "rb") as audio:
         linelist = list(audio)
         linecount = len(linelist)
     if linecount == 1:
-        tts = gTTS(message, lang=TTS_LANG)
+        tts = gTTS(text, lang=lan)
         tts.save("k.mp3")
     with open("k.mp3", "r"):
-        await query.client.send_file(query.chat_id, "k.mp3", reply_to=message_id_to_reply, voice_note=True)
+        await event.client.send_file(event.chat_id, "k.mp3", reply_to=event.reply_to_msg_id, voice_note=True)
         os.remove("k.mp3")
-        
+
         if BOTLOG:
-            await query.client.send_message(
+            await event.client.send_message(
                 BOTLOG_CHATID, "Text to Speech executed successfully !")
-        await query.delete()
+        await event.delete()
 
-
-@register(outgoing=True, pattern=r"^.trt(?: |$)([\s\S]*)")
-async def translateme(trans):
-    """ For .trt command, translate the given text using Google Translate. """
-    translator = Translator()
-    textx = await trans.get_reply_message()
-    message = trans.pattern_match.group(1)
-    if message:
-        pass
-    elif textx:
-        message = textx.text
-    else:
-        await trans.edit("`Give a text or reply to a message to translate!`")
-        return
-    try:
-        reply_text = translator.translate(deEmojify(message), dest=TRT_LANG)
-    except ValueError:
-        await trans.edit("Invalid destination language.")
-        return
-
-    source_lan = LANGUAGES[f'{reply_text.src.lower()}']
-    transl_lan = LANGUAGES[f'{reply_text.dest.lower()}']
-    reply_text = f"{reply_text.text}"
-
-    await trans.edit(reply_text)
-    if BOTLOG:
-        await trans.client.send_message(
-            BOTLOG_CHATID,
-            f"Translated some {source_lan.title()} stuff to {transl_lan.title()} just now.",
-        )
 
 @register(outgoing=True, pattern="^.tr(?: |$)(.*)")
 async def _(event):
@@ -498,8 +462,8 @@ async def _(event):
         previous_message = await event.get_reply_message()
         text = previous_message.message
         lan = input_str or "en"
-    elif "|" in input_str:
-        lan, text = input_str.split("|")
+    elif "/" in input_str:
+        lan, text = input_str.split("/")
     else:
         await event.edit("`.tr LanguageCode` as reply to a message")
         return
@@ -522,41 +486,6 @@ async def _(event):
         await event.edit(str(exc))
 
 
-@register(pattern=".lang (trt|tts) (.*)", outgoing=True)
-async def lang(value):
-    """ For .lang command, change the default langauge of userbot scrapers. """
-    util = value.pattern_match.group(1).lower()
-    if util == "trt":
-        scraper = "Translator"
-        global TRT_LANG
-        arg = value.pattern_match.group(2).lower()
-        if arg in LANGUAGES:
-            TRT_LANG = arg
-            LANG = LANGUAGES[arg]
-        else:
-            await value.edit(
-                f"`Invalid Language code !!`\n`Available language codes for TRT`:\n\n`{LANGUAGES}`"
-            )
-            return
-    elif util == "tts":
-        scraper = "Text to Speech"
-        global TTS_LANG
-        arg = value.pattern_match.group(2).lower()
-        if arg in tts_langs():
-            TTS_LANG = arg
-            LANG = tts_langs()[arg]
-        else:
-            await value.edit(
-                f"`Invalid Language code !!`\n`Available language codes for TTS`:\n\n`{tts_langs()}`"
-            )
-            return
-    await value.edit('Default lang changed successfully!')
-    await sleep(2)
-    await value.delete()
-    if BOTLOG:
-        await value.client.send_message(
-            BOTLOG_CHATID,
-            f"`Language for {scraper} changed to {LANG.title()}.`")
 
 @register(outgoing=True, pattern="^.yt (.*)")
 async def yt_search(video_q):
@@ -781,13 +710,13 @@ CMD_HELP.update(
         \nUsage: Does a search on Urban Dictionary.'})
 CMD_HELP.update({
     'tts':
-    '.tts <text> [or reply]\
-        \nUsage: Translates text to speech for the language which is set.\nUse .lang tts <language code> to set language for tts. (Default is English.)'
+    '.tts <lang code/text> [or reply]\
+        \nUsage: Translates text to speech for the language which is given in the cmd.\nEnglish is default for replies.'
 })
 CMD_HELP.update({
-    'trt':
-    '.trt <text> [or reply]\
-        \nUsage: Translates text to the language which is set.\nUse .lang trt <language code> to set language for trt. (Default is English).also tr.'
+    'tr':
+    '.tr <lang code/text> [or reply]\
+        \nUsage: Translates text to the language which is given in cmd.\nEnglish is default for replies.'
 })
 CMD_HELP.update({'yt': '.yt <count> <text>\
         \nUsage: Does a YouTube search.'})
