@@ -415,8 +415,8 @@ async def _(event):
     elif "|" in input_str:
         lan, text = input_str.split("|")
     else:
-        await event.edit("`.tts LanguageCode` as reply to a message")
-        return
+        text=input_str
+        lan='en'
     text = emoji.demojize(text.strip())
     lan = lan.strip()
     try: gTTS(text, lang=lan)
@@ -465,8 +465,8 @@ async def _(event):
     elif "|" in input_str:
         lan, text = input_str.split("|")
     else:
-        await event.edit("`.tr LanguageCode` as reply to a message")
-        return
+        text=input_str
+        lan='en'
     text = emoji.demojize(text.strip())
     lan = lan.strip()
     translator = Translator()
@@ -711,12 +711,12 @@ CMD_HELP.update(
 CMD_HELP.update({
     'tts':
     '.tts <lang code/text> [or reply]\
-        \nUsage: Translates text to speech for the language which is given in the cmd.\nEnglish is default for replies.'
+        \nUsage: Translates text to speech for the language which is given in the cmd.\nEnglish is default if not specified.'
 })
 CMD_HELP.update({
     'tr':
     '.tr <lang code/text> [or reply]\
-        \nUsage: Translates text to the language which is given in cmd.\nEnglish is default for replies.'
+        \nUsage: Translates text to the language which is given in cmd.\nEnglish is default if not specified.'
 })
 CMD_HELP.update({'yt': '.yt <count> <text>\
         \nUsage: Does a YouTube search.'})
