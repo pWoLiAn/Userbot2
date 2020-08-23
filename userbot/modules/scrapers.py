@@ -412,8 +412,8 @@ async def _(event):
         previous_message = await event.get_reply_message()
         text = previous_message.message
         lan = input_str or "en"
-    elif "/" in input_str:
-        lan, text = input_str.split("/")
+    elif "|" in input_str:
+        lan, text = input_str.split("|")
     else:
         await event.edit("`.tts LanguageCode` as reply to a message")
         return
@@ -462,8 +462,8 @@ async def _(event):
         previous_message = await event.get_reply_message()
         text = previous_message.message
         lan = input_str or "en"
-    elif "/" in input_str:
-        lan, text = input_str.split("/")
+    elif "|" in input_str:
+        lan, text = input_str.split("|")
     else:
         await event.edit("`.tr LanguageCode` as reply to a message")
         return
