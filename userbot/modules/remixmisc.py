@@ -359,24 +359,26 @@ async def potocmd(event):
         if id.strip() == "":
             try:
                 await event.client.send_file(event.chat_id, photos)
-            except a:
+                await event.edit("`Take em all >~<`")
+            except:
                 photo = await event.client.download_profile_photo(chat)
                 await bot.send_file(event.chat_id, photo)
+                await event.edit("`Grabbed group profile pic. of super group`")
         else:
             try:
                 id = int(id)
                 if id <= 0:
-                    await event.edit("`ID number you entered is invalid`")
+                    await event.edit("`Enter no. from 1-`")
                     return
             except:
-                 await event.edit("`lol wtf`")
+                 await event.edit("`ERROR 69:NOT ENUF BRAINCELLS >:(`")
                  return
             if int(id) <= (len(photos)):
                 send_photos = await event.client.download_media(photos[id - 1])
                 await bot.send_file(event.chat_id, send_photos)
-                await event.delete()
+                await event.edit(f"Grabbed profile pic NO. {i}")
             else:
-                await event.edit("`No photo found of that Nigga , now u Die`")
+                await event.edit("`No DP found`")
                 return
                 
 @register(outgoing=True, pattern="^.res(?: |$)(.*)")
