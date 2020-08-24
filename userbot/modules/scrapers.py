@@ -176,7 +176,10 @@ async def carbon_api(e):
 async def img_sampler(event):
     """ For .img command, search and return images matching the query. """
     await event.edit("Processing...")
-    count = int(event.pattern_match.group(1).split(' ',1)[0])
+    try:
+        count = int(event.pattern_match.group(1).split(' ',1)[0])
+    except:
+        count = 2
     query = event.pattern_match.group(1).split(' ',1)[1]
     lim = findall(r"lim=\d+", query)
     try:
