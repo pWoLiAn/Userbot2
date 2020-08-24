@@ -201,7 +201,7 @@ async def img_sampler(event):
     await event.client.send_file(
         await event.client.get_input_entity(event.chat_id), lst)
     shutil.rmtree(os.path.dirname(os.path.abspath(lst[0])))
-    await event.delete()
+    await event.edit(f"Grabbed {count} results for `{query}`.")
 
 
 @register(outgoing=True, pattern="^.currency (.*)")
