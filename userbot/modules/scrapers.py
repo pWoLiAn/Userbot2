@@ -178,9 +178,10 @@ async def img_sampler(event):
     await event.edit("Processing...")
     try:
         count = int(event.pattern_match.group(1).split(' ',1)[0])
+        query = event.pattern_match.group(1).split(' ',1)[1]
     except:
         count = 2
-    query = event.pattern_match.group(1).split(' ',1)[1]
+        query = event.pattern_match.group(1)
     lim = findall(r"lim=\d+", query)
     try:
         lim = lim[0]
@@ -204,7 +205,7 @@ async def img_sampler(event):
     await event.client.send_file(
         await event.client.get_input_entity(event.chat_id), lst)
     shutil.rmtree(os.path.dirname(os.path.abspath(lst[0])))
-    await event.edit(f"Grabbed {count} results for `{query}`.")
+    await event.edit(f"Grabbed {count} results for `{query}`")
 
 
 @register(outgoing=True, pattern="^.currency (.*)")
