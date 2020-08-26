@@ -126,7 +126,7 @@ async def upstream(event):
     force_update = False
     try:
         txt = "`Oops.. Updater cannot continue due to "
-        txt += "some problems occured`\n\n**LOGTRACE:**\n"
+        txt += "some errors occured`\n\n**LOGTRACE:**\n"
         repo = Repo()
     except NoSuchPathError as error:
         await event.edit(f'{txt}\n`directory {error} is not found`')

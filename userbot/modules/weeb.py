@@ -109,7 +109,7 @@ async def airing(event):
   if not search_str:
       await event.edit('Tell Anime Name :) ( .air <anime name>)')
       return
-  variables = {'search' : search_str[1]}
+  variables = {'search' : search_str}
   response = requests.post(url, json={'query': airing_query, 'variables': variables}).json()['data']['Media']
   msg = f"**Name**: **{response['title']['romaji']}**(`{response['title']['native']}`)\n**ID**: `{response['id']}`"
   if response['nextAiringEpisode']:
