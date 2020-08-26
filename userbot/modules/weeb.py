@@ -103,13 +103,11 @@ anime_query = '''
 url = 'https://graphql.anilist.co'
 
 
-@register(outgoing=True, pattern=r"^.air(.*)")
+@register(outgoing=True, pattern=r"^.air(?: |$)(.*)")
 async def airing(event):
-  message = event.pattern_match.group(1)
-  message = ' ' + message
-  search_str = message.split(' ', 1)
-  if len(search_str) == 1:
-      await event.edit('Tell Anime Name :) ( /airing <anime name>)')
+  search_str = event.pattern_match.group(1)
+  if not search_str:
+      await event.edit('Tell Anime Name :) ( .air <anime name>)')
       return
   variables = {'search' : search_str[1]}
   response = requests.post(url, json={'query': airing_query, 'variables': variables}).json()['data']['Media']
