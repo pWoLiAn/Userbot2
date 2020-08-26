@@ -34,7 +34,7 @@ async def repcf(event):
 async def addcf(event):
     if event.fwd_from:
         return
-    await event.edit("Running on Non-SQL mode for now...")
+    await event.edit("Running on Non-SQL mode...")
     await asyncio.sleep(4)
     await event.edit("Processing...")
     reply_msg = await event.get_reply_message()
@@ -52,7 +52,7 @@ async def addcf(event):
 async def remcf(event):
     if event.fwd_from:
         return
-    await event.edit("Running on Non-SQL mode for now...")
+    await event.edit("Running on Non-SQL mode...")
     await asyncio.sleep(4)
     await event.edit("Processing...")
     reply_msg = await event.get_reply_message()
@@ -80,14 +80,10 @@ async def user(event):
 
 CMD_HELP.update({
     "lydia":
-    ".lstcf <username/reply>\
-\nUsage: Outputs List Of Currently added Users in AI Auto-Chat.\
-\n\n.delcf <username/reply>\
-\n\n.addcf <username/reply>\
+    ".addcf <username/reply>\
 \nUsage: add's lydia auto chat request in the chat.\
 \n\n.remcf <username/reply>\
 \nUsage: remove's lydia auto chat request in the chat.\
-\n\n.enacf <username/reply>\
 \n\n.repcf <username/reply>\
 \nUsage: starts lydia replying to particular person in the chat. \
 \n Note:  get your value from https://coffeehouse.intellivoid.info/dashboard."
