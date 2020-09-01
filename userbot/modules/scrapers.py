@@ -446,7 +446,7 @@ async def _(event):
     translator = Translator()
     det_src = translator.detect(text)
     if lan:
-        if det_src != lan:
+        if det_src.lang != lan:
             translated = translator.translate(text, dest=lan)
             text = translated.text
     else: lan = det_src.lang    
