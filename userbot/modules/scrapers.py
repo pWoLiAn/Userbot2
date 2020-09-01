@@ -450,7 +450,7 @@ async def _(event):
         if det_src.lang != lan:
             translated = translator.translate(text, dest=lan)
             text = translated.text
-            cap='TR+TTS'
+            cap=f"TR+TTS:{det_src.lang}->{lan}"
     else: lan = det_src.lang    
     tts = gTTS(text, lang=lan)
     tts.save("k.mp3")
