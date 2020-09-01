@@ -416,12 +416,9 @@ async def _(event):
     if event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
         text = previous_message.message
-        lan = input_str or "en"
+        lan = input_str 
     elif "|" in input_str:
         lan, text = input_str.split("|")
-    else:
-        text=input_str
-        lan='en'
     text = emoji.demojize(text.strip())
     lan = lan.strip()
     try: gTTS(text, lang=lan)
@@ -438,9 +435,11 @@ async def _(event):
         await event.edit('Error loading the languages dictionary.')
         return
     translator = Translator()
-    translated = translator.translate(text, dest=lan)
-    after_tr_text = translated.text
-    if translated.src != lan : text = after_tr_text
+    det_src = translator.detect(text)
+    if lan:
+        translated = translator.translate(text, dest=lan)
+        text = translated.text
+    else: lan = det_src    
     tts = gTTS(text, lang=lan)
     tts.save("k.mp3")
     with open("k.mp3", "rb") as audio:
