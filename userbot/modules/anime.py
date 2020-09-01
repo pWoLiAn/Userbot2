@@ -15,7 +15,7 @@ import aiohttp
 import bs4
 import pendulum
 import requests
-from html_telegraph_poster import TelegraphPoster
+
 
 from telethon.errors.rpcerrorlist import FilePartsInvalidError
 from telethon.tl.types import (DocumentAttributeAnimated,

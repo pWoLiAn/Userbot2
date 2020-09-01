@@ -77,6 +77,5 @@ pymongo[srv]
 youtube_search
 justwatch
 nekos.py
-html_telegraph_poster
 pendulum==2.0.5
 validators
