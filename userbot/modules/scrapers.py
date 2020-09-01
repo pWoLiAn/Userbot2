@@ -421,6 +421,7 @@ async def _(event):
         lan = input_str 
     elif "|" in input_str:
         lan, text = input_str.split("|")
+    else: text = input_str
     text = emoji.demojize(text.strip())
     lan = lan.strip()
     try: gTTS(text, lang=lan)
