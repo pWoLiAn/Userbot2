@@ -80,9 +80,9 @@ async def set_afk(afk_e):
     else:
         await afk_e.edit("**Going AFK!**")
     if user.last_name:
-        await afk_e.client(UpdateProfileRequest(first_name=user.first_name, last_name=user.last_name + " ;but busy"))
+        await afk_e.client(UpdateProfileRequest(first_name=user.first_name, last_name=user.last_name + " <> but busy"))
     else:
-        await afk_e.client(UpdateProfileRequest(first_name=user.first_name, last_name=" ;but busy"))
+        await afk_e.client(UpdateProfileRequest(first_name=user.first_name, last_name=" <> but busy"))
     if BOTLOG:
         await afk_e.client.send_message(BOTLOG_CHATID, "#AFK\nYou went AFK!")
     ISAFK = True
@@ -103,8 +103,8 @@ async def type_afk_is_not_true(notafk):
     global afk_end
     user = await bot.get_me()
     last = user.last_name
-    if last and last.endswith(" ;but busy"):
-        last1 = last[:-10]
+    if last and last.endswith(" <> but busy"):
+        last1 = last[:-12]
     else:
         last1 = ""
     back_alive = datetime.now()
