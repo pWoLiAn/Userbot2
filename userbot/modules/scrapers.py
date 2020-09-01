@@ -325,7 +325,10 @@ async def gsearch(q_event):
     """ For .google command, do a Google search. """
     textx = await q_event.get_reply_message()
     query = q_event.pattern_match.group(1).split(' ',1)[1]
-    count = int(q_event.pattern_match.group(1).split(' ',1)[0])
+    try:
+        count = int(q_event.pattern_match.group(1).split(' ',1)[0])
+    except:
+        count = 5
     if query:
         pass
     elif textx:
@@ -334,9 +337,7 @@ async def gsearch(q_event):
         await q_event.edit("`Pass a query as an argument or reply "
                            "to a message for Google search!`")
         return
-
     q_event.edit("`Searching...`")
-
     search_args = (str(query), 1)
     googsearch = GoogleSearch()
     gresults = await googsearch.async_search(*search_args)
@@ -436,6 +437,11 @@ async def _(event):
     except RuntimeError:
         await event.edit('Error loading the languages dictionary.')
         return
+    translator = Translator()
+    translated = translator.translate(text, dest=lan)
+    after_tr_text = translated.text
+    if translated.src != lan : text = after_tr_text
+    if (not event.reply_to_msg_id) and (not "|" in input_str) : lan = translated.src
     tts = gTTS(text, lang=lan)
     tts.save("k.mp3")
     with open("k.mp3", "rb") as audio:
