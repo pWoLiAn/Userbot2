@@ -324,11 +324,13 @@ async def imdb(e):
 async def gsearch(q_event):
     """ For .google command, do a Google search. """
     textx = await q_event.get_reply_message()
-    query = q_event.pattern_match.group(1).split(' ',1)[1]
     try:
         count = int(q_event.pattern_match.group(1).split(' ',1)[0])
+        query = q_event.pattern_match.group(1).split(' ',1)[1]
     except:
         count = 5
+        query = q_event.pattern_match.group(1)
+    if count > 20 : count = 5
     if query:
         pass
     elif textx:
@@ -498,10 +500,14 @@ async def _(event):
 @register(outgoing=True, pattern="^.yt (.*)")
 async def yt_search(video_q):
     """ For .yt command, do a YouTube search from Telegram. """
-    c = int(video_q.pattern_match.group(1).split(' ',1)[0])
-    query = video_q.pattern_match.group(1).split(' ',1)[1]
+    try:
+        c = int(video_q.pattern_match.group(1).split(' ',1)[0])
+        query = video_q.pattern_match.group(1).split(' ',1)[1]
+    except: 
+        c = 5
+        query = video_q.pattern_match.group(1)
     result = ''
-
+    if c > 20: c = 5
     if not YOUTUBE_API_KEY:
         await video_q.edit(
             "`Error: YouTube API key missing! Add it to environment vars or config.env.`"
