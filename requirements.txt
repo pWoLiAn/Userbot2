@@ -59,7 +59,6 @@ beautifulsoup4>=4.8.1
 youtube-dl>=2019.9.28
 PyGithub
 bs4
-covid>=2.2.9
 base
 pip>=19.2.3
 setuptools>=28.8.0
@@ -77,10 +76,7 @@ pytube>=9.5.1
 pymongo[srv]
 youtube_search
 justwatch
-deezloader
-zipfile38
 nekos.py
 html_telegraph_poster
-jikanpy
 pendulum==2.0.5
 validators
