@@ -446,8 +446,9 @@ async def _(event):
     translator = Translator()
     det_src = translator.detect(text)
     if lan:
-        translated = translator.translate(text, dest=lan)
-        text = translated.text
+        if det_src != lan:
+            translated = translator.translate(text, dest=lan)
+            text = translated.text
     else: lan = det_src.lang    
     tts = gTTS(text, lang=lan)
     tts.save("k.mp3")
