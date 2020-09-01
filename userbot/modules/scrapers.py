@@ -441,7 +441,6 @@ async def _(event):
     translated = translator.translate(text, dest=lan)
     after_tr_text = translated.text
     if translated.src != lan : text = after_tr_text
-    if (not event.reply_to_msg_id) and (not "|" in input_str) : lan = translated.src
     tts = gTTS(text, lang=lan)
     tts.save("k.mp3")
     with open("k.mp3", "rb") as audio:
