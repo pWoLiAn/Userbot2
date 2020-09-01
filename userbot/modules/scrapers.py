@@ -423,7 +423,7 @@ async def _(event):
         lan, text = input_str.split("|")
     else: text = input_str
     text = emoji.demojize(text.strip())
-    lan = lan.strip()
+    if lan: lan = lan.strip()
     try: gTTS(text, lang=lan)
     except AssertionError:
         await event.edit(
