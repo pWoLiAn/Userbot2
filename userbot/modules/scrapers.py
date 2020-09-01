@@ -433,22 +433,22 @@ async def _(event):
         try: gTTS(text, lang=lan)
         except AssertionError:
             await event.edit(
-                'The text is empty.\n'
-                'Nothing left to speak after pre-precessing, tokenizing and cleaning.'
+                '`The text is empty.`\n'
+                '`Nothing left to speak after pre-precessing, tokenizing and cleaning`.'
             )
             return
         except ValueError:
-            await event.edit('Language is not supported.')
+            await event.edit('`Language is not supported.`')
             return
         except RuntimeError:
-            await event.edit('Error loading the languages dictionary.')
+            await event.edit('`Error loading the languages dictionary.`')
             return
     translator = Translator()
     det_src = translator.detect(text)
     if lan:
         translated = translator.translate(text, dest=lan)
         text = translated.text
-    else: lan = det_src    
+    else: lan = det_src.lang    
     tts = gTTS(text, lang=lan)
     tts.save("k.mp3")
     with open("k.mp3", "rb") as audio:
