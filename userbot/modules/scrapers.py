@@ -425,20 +425,24 @@ async def _(event):
          text = input_str
          lan = None
     text = emoji.demojize(text.strip())
-    if lan: lan = lan.strip()
-    try: gTTS(text, lang=lan)
-    except AssertionError:
-        await event.edit(
-            'The text is empty.\n'
-            'Nothing left to speak after pre-precessing, tokenizing and cleaning.'
-        )
+    if not text:
+        await event.edit('`I cant speak void bakka`')
         return
-    except ValueError:
-        await event.edit('Language is not supported.')
-        return
-    except RuntimeError:
-        await event.edit('Error loading the languages dictionary.')
-        return
+    if lan and text:
+        lan = lan.strip()
+        try: gTTS(text, lang=lan)
+        except AssertionError:
+            await event.edit(
+                'The text is empty.\n'
+                'Nothing left to speak after pre-precessing, tokenizing and cleaning.'
+            )
+            return
+        except ValueError:
+            await event.edit('Language is not supported.')
+            return
+        except RuntimeError:
+            await event.edit('Error loading the languages dictionary.')
+            return
     translator = Translator()
     det_src = translator.detect(text)
     if lan:
