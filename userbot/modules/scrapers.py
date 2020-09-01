@@ -443,12 +443,14 @@ async def _(event):
         except RuntimeError:
             await event.edit('`Error loading the languages dictionary.`')
             return
+    cap='TTS'
     translator = Translator()
     det_src = translator.detect(text)
     if lan:
         if det_src.lang != lan:
             translated = translator.translate(text, dest=lan)
             text = translated.text
+            cap='TR+TTS'
     else: lan = det_src.lang    
     tts = gTTS(text, lang=lan)
     tts.save("k.mp3")
@@ -459,7 +461,7 @@ async def _(event):
         tts = gTTS(text, lang=lan)
         tts.save("k.mp3")
     with open("k.mp3", "r"):
-        await event.client.send_file(event.chat_id, "k.mp3", reply_to=event.reply_to_msg_id, voice_note=True)
+        await event.client.send_file(event.chat_id, "k.mp3", reply_to=event.reply_to_msg_id, voice_note=True, caption=cap)
         os.remove("k.mp3")
 
         if BOTLOG:
