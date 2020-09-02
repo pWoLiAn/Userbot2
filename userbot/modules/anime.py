@@ -52,7 +52,7 @@ async def site_search(event):
     elif message:
         search_query = message.text.strip()
     else:
-        await event.edit("`Uuf Bro.. Gib something to Search`")
+        await event.edit("`I can't search void LoL`")
         return
 
     if site == "kaizoku":
