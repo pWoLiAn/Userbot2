@@ -407,14 +407,15 @@ async def _(event):
     except asyncurban.WordNotFoundError:
         await event.edit("No result found for **" + word + "**")
 
-@register(outgoing=True, pattern=r"^.tts(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^.t(r|t)s(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
     if "trim" in event.raw_text:
         # https://t.me/c/1220993104/192075
         return
-    input_str = event.pattern_match.group(1)
+    input_str = event.pattern_match.group(2)
+    wat = event.pattern_match.group(1)
     if event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
         text = previous_message.message
@@ -448,7 +449,7 @@ async def _(event):
     if lan:
         if det_src.lang != lan:
             translated = translator.translate(text, dest=lan)
-            text = translated.text
+            if wat=='r':    text = translated.text
     else: lan = det_src.lang    
     tts = gTTS(text, lang=lan)
     tts.save("k.mp3")
@@ -731,9 +732,9 @@ CMD_HELP.update(
     {'ud': '.ud <query>\
         \nUsage: Does a search on Urban Dictionary.'})
 CMD_HELP.update({
-    'tts':
+    't(r|t)s':
     '.tts <lang code/text> [or reply]\
-        \nUsage: Translates text to speech for the language which is given in the cmd.\nEnglish is default if not specified.'
+        \nUsage: Translates text to speech for the language which is given in the cmd.\nEnglish is default if not specified.Use r fot translated and t if not required.'
 })
 CMD_HELP.update({
     'tr':
