@@ -1,6 +1,7 @@
 #BY ME huuhuuhu
  
 import datetime
+from asyncio import sleep
 from telethon import events
 from telethon import utils
 from telethon.errors.rpcerrorlist import YouBlockedUserError
@@ -29,6 +30,10 @@ async def _(hentai):
           except YouBlockedUserError: 
               await hentai.reply(f"`Please unblock` {chat} `and try again`")
               return
+          else :
+              await hentai.edit("`Bot doesnt exist :(`")
+              await sleep(2)
+              return await hentai.delete()
          
           await hentai.edit(f"`Message sent` : {link}"
                                f"\n`Sent to` : {chat}")
