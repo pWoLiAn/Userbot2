@@ -30,7 +30,7 @@ async def _(hentai):
           except YouBlockedUserError: 
               await hentai.reply(f"`Please unblock` {chat} `and try again`")
               return
-          else :
+          except :
               await hentai.edit("`Bot doesnt exist :(`")
               await sleep(2)
               return await hentai.delete()
