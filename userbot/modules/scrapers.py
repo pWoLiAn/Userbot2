@@ -735,12 +735,12 @@ CMD_HELP.update(
         \nUsage: Does a search on Urban Dictionary.'})
 CMD_HELP.update({
     'tts':
-    '.t(r|t)s <lang code/text> [or reply]\
-        \nUsage: Translates text to speech for the language which is given in the cmd.\nEnglish is default if not specified.Use r fot translated and t if not required.'
+    '.t(r|t)s <lang code|text> [or reply]\
+        \nUsage: Translates text to speech for the language which is given in the cmd.\nEnglish is default if not specified.Use r for translated and t if not required.'
 })
 CMD_HELP.update({
     'tr':
-    '.t(t|r) <lang code/text> [or reply]\
+    '.t(t|r) <lang code|text> [or reply]\
         \nUsage: Translates text to the language which is given in cmd.\nEnglish is default if not specified.use t to talk and r to translate.'
 })
 CMD_HELP.update({'yt': '.yt <count> <text>\
