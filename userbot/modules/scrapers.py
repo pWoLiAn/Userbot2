@@ -469,14 +469,15 @@ async def _(event):
         await event.delete()
 
 
-@register(outgoing=True, pattern="^.tr(?: |$)(.*)")
+@register(outgoing=True, pattern="^.t(r|t)(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
     if "trim" in event.raw_text:
         # https://t.me/c/1220993104/192075
         return
-    input_str = event.pattern_match.group(1)
+    input_str = event.pattern_match.group(2)
+    con =  event.pattern_match.group(1)
     if event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
         text = previous_message.message
@@ -500,7 +501,8 @@ async def _(event):
             lan,
             after_tr_text
         )
-        await event.edit(output_str)
+        if con == 'r' : await event.edit(output_str)
+        else : await event.edit(after_tr_text)
     except Exception as exc:
         await event.edit(str(exc))
 
@@ -732,14 +734,14 @@ CMD_HELP.update(
     {'ud': '.ud <query>\
         \nUsage: Does a search on Urban Dictionary.'})
 CMD_HELP.update({
-    't(r|t)s':
-    '.tts <lang code/text> [or reply]\
+    'tts':
+    '.t(r|t)s <lang code/text> [or reply]\
         \nUsage: Translates text to speech for the language which is given in the cmd.\nEnglish is default if not specified.Use r fot translated and t if not required.'
 })
 CMD_HELP.update({
     'tr':
-    '.tr <lang code/text> [or reply]\
-        \nUsage: Translates text to the language which is given in cmd.\nEnglish is default if not specified.'
+    '.t(t|r) <lang code/text> [or reply]\
+        \nUsage: Translates text to the language which is given in cmd.\nEnglish is default if not specified.use t to talk and r to translate.'
 })
 CMD_HELP.update({'yt': '.yt <count> <text>\
         \nUsage: Does a YouTube search.'})
