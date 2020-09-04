@@ -64,7 +64,7 @@ async def site_search(event):
         if search_result:
             result = f"<b><a href='{search_url.replace(' ','%20')}'>Search results</a> for</b> <code>{html.escape(search_query)}</code> <b>on</b> <code>AnimeKaizoku</code>: \n"
             for entry in search_result:
-                post_link = entry.a["href"]
+                post_link = "https://animekaizoku.com/"+entry.a["href"]
                 post_name = html.escape(entry.text.strip())
                 result += f"• <a href={post_link}>{post_name}</a>\n"
             await event.edit(result, parse_mode="HTML")
