@@ -1,7 +1,7 @@
 #BY ME huuhuuhu
  
 import datetime
-from asyncio import sleep
+import asyncio
 from telethon import events
 from telethon import utils
 from telethon.errors.rpcerrorlist import YouBlockedUserError
@@ -24,7 +24,11 @@ async def _(hentai):
           try:     
               response = conv.wait_event(events.NewMessage(incoming=True,from_users=botid))
               msg = await bot.send_message(chat, link)
-              response = await response
+              try:
+                response = await asyncio.wait_for(response, timeout=3.0)
+              except asyncio.TimeoutError:
+                await hentai.edit("`Timeout!`")
+                return
               """ - don't spam notif - """
               await bot.send_read_acknowledge(conv.chat_id)
           except YouBlockedUserError: 
@@ -32,11 +36,11 @@ async def _(hentai):
               return
           except :
               await hentai.edit("`Bot doesnt exist :(`")
-              await sleep(2)
+              await asyncio.sleep(2)
               return await hentai.delete()
          
-          await hentai.edit(f"`Message sent` : {link}"
-                               f"\n`Sent to` : {chat}")
+          await hentai.edit(f"`Cmd` : {link}"
+                               f"\n`Bot` : {chat}")
           await bot.send_message(hentai.chat_id, response.message)
           await bot.send_read_acknowledge(hentai.chat_id)
           """ - cleanup chat after completed - """
