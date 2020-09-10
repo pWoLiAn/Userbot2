@@ -128,7 +128,5 @@ async def set_biodgraph(setdbio):
 
 CMD_HELP.update({
     "spotify": 
-        'Spotify', " - `.enablespotify`: Enable Spotify bio updating.\n"
-        " - `.disablespotify`: Disable Spotify bio updating.\n"
-    
-})
+        "`.enablespotify`: Enable Spotify bio updating.\n"
+        "`.disablespotify`: Disable Spotify bio updating.\n"})
