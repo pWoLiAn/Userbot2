@@ -36,8 +36,8 @@ PARSE = False
 
 # ================================================
 async def get_spotify_token():
-    
-    access_token = "BQCHQ2qwKU128lCuG5Szgfc4awlC5T2abWzPK18yDJ6ei1v0fs-E0V5sHa2YvtFPfMVPkOVr8KVq6nnj7qqUgsTOeofgUSGtXcvboMIlgF5jZ2QqV92yiLqrwX8Xf_02SYhXsiAQRQ8e15cvfppjGQyFf7OX7vHTohfXhn1PUk8NjFvOKSSwlSRa5ZznaNWR579j4Xc3PNaqREZas4RAcZFheFcpuLjXteB9SWB43jw26Y7zN9eniojQ7MAbhrc9R7B-VzUMwqCyMCi8Jk9nWYy9YvR6Hr4B2qTZEsOp1E_20A1LXA"
+    sptoken = st.start_session(USERNAME, PASSWORD)
+    access_token = sptoken[0]
     environ["spftoken"] = access_token
 
 
