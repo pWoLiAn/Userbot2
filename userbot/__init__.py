@@ -125,6 +125,10 @@ LYDIA_API_KEY = os.environ.get("LYDIA_API_KEY", None)
 ANTI_SPAMBOT = sb(os.environ.get("ANTI_SPAMBOT", "False"))
 ANTI_SPAMBOT_SHOUT = sb(os.environ.get("ANTI_SPAMBOT_SHOUT", "False"))
 
+#Spotify Bio Changer vars
+SPOTIFY_USERNAME = os.environ.get("SPOTIFY_USERNAME") or None
+SPOTIFY_PASS = os.environ.get("SPOTIFY_PASS") or None
+
 # Youtube API key
 YOUTUBE_API_KEY = os.environ.get("YOUTUBE_API_KEY", None)
 

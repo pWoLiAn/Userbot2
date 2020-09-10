@@ -95,37 +95,7 @@ async def unmute_chat(unm_e):
     await unm_e.delete()
 
 
-@register(outgoing=True, pattern="^.mutechat$")
-async def mute_chat(mute_e):
-    """ For .mutechat command, mute any chat. """
-    try:
-        from userbot.modules.sql_helper.keep_read_sql import kread
-    except AttributeError:
-        await mute_e.edit("`Running on Non-SQL mode!`")
-        return
-    await mute_e.edit(str(mute_e.chat_id))
-    kread(str(mute_e.chat_id))
-    await mute_e.edit("`Shush! This chat will be silenced!`")
-    await sleep(2)
-    await mute_e.delete()
-    if BOTLOG:
-        await mute_e.client.send_message(
-            BOTLOG_CHATID,
-            str(mute_e.chat_id) + " was silenced.")
 
-
-@register(incoming=True, disable_errors=True)
-async def keep_read(message):
-    """ The mute logic. """
-    try:
-        from userbot.modules.sql_helper.keep_read_sql import is_kread
-    except AttributeError:
-        return
-    kread = is_kread()
-    if kread:
-        for i in kread:
-            if i.groupid == str(message.chat_id):
-                await message.client.send_read_acknowledge(message.chat_id)
 
 
 # Regex-Ninja module by @Kandnub
