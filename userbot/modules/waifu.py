@@ -23,7 +23,7 @@ from PIL import ImageEnhance, ImageOps
 
 from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY, bot
 from userbot.events import register
-from userbot.modules.admin import get_user_from_event
+
 
 
 EMOJI_PATTERN = re.compile(
