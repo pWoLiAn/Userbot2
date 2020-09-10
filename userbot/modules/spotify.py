@@ -11,7 +11,7 @@ from telethon.tl.functions.account import UpdateProfileRequest
 
 from userbot import (BIO_PREFIX, BOTLOG, BOTLOG_CHATID, CMD_HELP, DEFAULT_BIO,
                      SPOTIFY_PASS, SPOTIFY_USERNAME, bot)
-from userbot.events import register, grp_exclude
+from userbot.events import register
 
 # =================== CONSTANT ===================
 SPO_BIO_ENABLED = "`Spotify current music to bio is now enabled.`"
