@@ -7,6 +7,8 @@
 from asyncio import sleep
 from userbot import CMD_HELP, BOTLOG, BOTLOG_CHATID, bot
 from userbot.events import register
+from telethon.tl.types import  MessageEntityMentionName
+                               
 
 
 async def get_user_from_event(event):
