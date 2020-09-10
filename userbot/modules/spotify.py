@@ -4,13 +4,12 @@ from json.decoder import JSONDecodeError
 from os import environ
 from sys import setrecursionlimit
 
-import spotify_token as st
 from requests import get
 from telethon.errors import AboutTooLongError
 from telethon.tl.functions.account import UpdateProfileRequest
 
 from userbot import (BIO_PREFIX, BOTLOG, BOTLOG_CHATID, CMD_HELP, DEFAULT_BIO,
-                     SPOTIFY_PASS, SPOTIFY_USERNAME, bot)
+                    SPOTIFY_USERNAME, bot)
 from userbot.events import register
 
 # =================== CONSTANT ===================
@@ -21,7 +20,7 @@ SPO_BIO_RUNNING = "`Spotify current music to bio is already running.`"
 ERROR_MSG = "`Spotify module halted, got an unexpected error.`"
 
 USERNAME = SPOTIFY_USERNAME
-PASSWORD = SPOTIFY_PASS
+
 
 ARTIST = 0
 SONG = 0
@@ -36,8 +35,7 @@ PARSE = False
 
 # ================================================
 async def get_spotify_token():
-    sptoken = st.start_session(USERNAME, PASSWORD)
-    access_token = sptoken[0]
+    access_token = USERNAME
     environ["spftoken"] = access_token
 
 
@@ -75,7 +73,9 @@ async def update_spotify_info():
         except KeyError:
             errorcheck = environ.get("errorcheck", None)
             if errorcheck == 0:
-                await update_token()
+                await bot.send_message(BOTLOG_CHATID,"Get new spotify token")
+                environ["errorcheck"]="1"
+                return
             elif errorcheck == 1:
                 SPOTIFYCHECK = False
                 await bot(UpdateProfileRequest(about=DEFAULT_BIO))
@@ -94,12 +94,7 @@ async def update_spotify_info():
     RUNNING = False
 
 
-async def update_token():
-    sptoken = st.start_session(USERNAME, PASSWORD)
-    access_token = sptoken[0]
-    environ["spftoken"] = access_token
-    environ["errorcheck"] = "1"
-    await update_spotify_info()
+
 
 
 async def dirtyfix():
@@ -132,8 +127,8 @@ async def set_biodgraph(setdbio):
 
 
 CMD_HELP.update({
-    "spotify": [
+    "spotify": 
         'Spotify', " - `.enablespotify`: Enable Spotify bio updating.\n"
         " - `.disablespotify`: Disable Spotify bio updating.\n"
-    ]
+    
 })
