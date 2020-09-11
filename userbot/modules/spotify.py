@@ -4,13 +4,14 @@ from json.decoder import JSONDecodeError
 from os import environ
 from sys import setrecursionlimit
 
+import spotify_token as st
 from requests import get
 from telethon.errors import AboutTooLongError
 from telethon.tl.functions.account import UpdateProfileRequest
 
 from userbot import (BIO_PREFIX, BOTLOG, BOTLOG_CHATID, CMD_HELP, DEFAULT_BIO,
                     SPOTIFY_USERNAME, bot)
-from userbot.events import register
+from userbot.events import register, grp_exclude
 
 # =================== CONSTANT ===================
 SPO_BIO_ENABLED = "`Spotify current music to bio is now enabled.`"
@@ -19,8 +20,8 @@ SPO_BIO_DISABLED += "Bio reverted to default.`"
 SPO_BIO_RUNNING = "`Spotify current music to bio is already running.`"
 ERROR_MSG = "`Spotify module halted, got an unexpected error.`"
 
-USERNAME = SPOTIFY_USERNAME
-
+USERNAME = "AQA8A7vEJWWXsKQ5gnWsV-gth0_u5J4pbooKiNS3NQkOcPs2BAejQY7Qf1KLCZ96UG7t3u_fgsE4oC8Zn2iWlpJ73JwvLWzFieFGNjVoNlw"
+PASSWORD = "8732a396-38ef-4491-9852-fdd56f0bdd38"
 
 ARTIST = 0
 SONG = 0
@@ -35,7 +36,8 @@ PARSE = False
 
 # ================================================
 async def get_spotify_token():
-    access_token = USERNAME
+    sptoken = st.start_session(USERNAME, PASSWORD)
+    access_token = sptoken[0]
     environ["spftoken"] = access_token
 
 
@@ -73,9 +75,7 @@ async def update_spotify_info():
         except KeyError:
             errorcheck = environ.get("errorcheck", None)
             if errorcheck == 0:
-                await bot.send_message(BOTLOG_CHATID,"Get new spotify token")
-                environ["errorcheck"]="1"
-                return
+                await update_token()
             elif errorcheck == 1:
                 SPOTIFYCHECK = False
                 await bot(UpdateProfileRequest(about=DEFAULT_BIO))
@@ -94,7 +94,12 @@ async def update_spotify_info():
     RUNNING = False
 
 
-
+async def update_token():
+    sptoken = st.start_session(USERNAME, PASSWORD)
+    access_token = sptoken[0]
+    environ["spftoken"] = access_token
+    environ["errorcheck"] = "1"
+    await update_spotify_info()
 
 
 async def dirtyfix():
@@ -129,4 +134,4 @@ async def set_biodgraph(setdbio):
 CMD_HELP.update({
     "spotify": 
         "`.enablespotify`: Enable Spotify bio updating.\n"
-        "`.disablespotify`: Disable Spotify bio updating.\n"})
+        "`.disablespotify`: Disable Spotify bio updating."})
