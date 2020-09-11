@@ -10,7 +10,7 @@ from telethon.errors import AboutTooLongError
 from telethon.tl.functions.account import UpdateProfileRequest
 
 from userbot import (BIO_PREFIX, BOTLOG, BOTLOG_CHATID, CMD_HELP, DEFAULT_BIO,
-                    SPOTIFY_USERNAME, bot)
+                    SPOTIFY_USERNAME, SPOTIFY_PASS, bot)
 from userbot.events import register
 
 # =================== CONSTANT ===================
@@ -20,8 +20,8 @@ SPO_BIO_DISABLED += "Bio reverted to default.`"
 SPO_BIO_RUNNING = "`Spotify current music to bio is already running.`"
 ERROR_MSG = "`Spotify module halted, got an unexpected error.`"
 
-USERNAME = "AQA8A7vEJWWXsKQ5gnWsV-gth0_u5J4pbooKiNS3NQkOcPs2BAejQY7Qf1KLCZ96UG7t3u_fgsE4oC8Zn2iWlpJ73JwvLWzFieFGNjVoNlw"
-PASSWORD = "8732a396-38ef-4491-9852-fdd56f0bdd38"
+USERNAME = SPOTIFY_USERNAME
+PASSWORD = SPOTIFY_PASS
 
 ARTIST = 0
 SONG = 0
