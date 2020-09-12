@@ -501,7 +501,7 @@ async def _(event):
             lan,
             after_tr_text
         )
-        if con == 'r' : await event.edit(output_str)
+        if con == 'r' : await event.edit('`'+output_str+'`')
         else : await event.edit(after_tr_text)
     except Exception as exc:
         await event.edit(str(exc))
