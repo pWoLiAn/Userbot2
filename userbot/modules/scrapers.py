@@ -496,7 +496,7 @@ async def _(event):
         # TODO: emojify the :
         # either here, or before translation
         output_str = """**TRANSLATED** from {} to {}
-'{}'""".format(
+`{}`""".format(
             translated.src,
             lan,
             after_tr_text
