@@ -376,7 +376,7 @@ async def potocmd(event):
             if int(id) <= (len(photos)):
                 send_photos = await event.client.download_media(photos[id - 1])
                 await bot.send_file(event.chat_id, send_photos)
-                await event.edit(f"Grabbed profile pic NO. {i}")
+                await event.edit(f"Grabbed profile pic NO. {id}")
             else:
                 await event.edit("`No DP found`")
                 return
