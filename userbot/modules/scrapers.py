@@ -496,12 +496,12 @@ async def _(event):
         # TODO: emojify the :
         # either here, or before translation
         output_str = """**TRANSLATED** from {} to {}
-{}""".format(
+'{}'""".format(
             translated.src,
             lan,
             after_tr_text
         )
-        if con == 'r' : await event.edit('`'+output_str+'`')
+        if con == 'r' : await event.edit(output_str)
         else : await event.edit(after_tr_text)
     except Exception as exc:
         await event.edit(str(exc))
