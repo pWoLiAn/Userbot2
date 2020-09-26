@@ -42,7 +42,7 @@ async def _(hentai):
              return
           else:
              await hentai.delete()
-             await bot.send_message(hentai.chat_id, response.message, reply_to=event.reply_to_msg_id)
+             await bot.send_message(hentai.chat_id, response.message, reply_to=hentai.reply_to_msg_id)
              await bot.send_read_acknowledge(hentai.chat_id)
              """ - cleanup chat after completed - """
              await hentai.client.delete_messages(conv.chat_id,
