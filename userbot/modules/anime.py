@@ -153,7 +153,7 @@ async def whatanime(e):
         async with session.get(url) as raw_resp1:
             file = memory_file("preview.mp4", await raw_resp1.read())
         try:
-            await e.reply(url, file=file, parse_mode="html")
+            await e.reply(url)
         except FilePartsInvalidError:
             await e.reply("`Cannot send preview.`")
 
