@@ -109,7 +109,7 @@ async def dirtyfix():
     await update_spotify_info()
 
 
-@register(outgoing=True, pattern="^.enablespotify$")
+@register(outgoing=True, pattern="^.sp$")
 async def set_biostgraph(setstbio):
     setrecursionlimit(700000)
     if not SPOTIFYCHECK:
@@ -121,7 +121,7 @@ async def set_biostgraph(setstbio):
         await setstbio.edit(SPO_BIO_RUNNING)
 
 
-@register(outgoing=True, pattern="^.disablespotify$")
+@register(outgoing=True, pattern="^.dsp$")
 async def set_biodgraph(setdbio):
     global SPOTIFYCHECK
     global RUNNING
@@ -133,5 +133,5 @@ async def set_biodgraph(setdbio):
 
 CMD_HELP.update({
     "spotify": 
-        "`.enablespotify`: Enable Spotify bio updating.\n"
-        "`.disablespotify`: Disable Spotify bio updating."})
+        "`.sp`: Enable Spotify bio updating.\n"
+        "`.dsp`: Disable Spotify bio updating."})
